@@ -185,7 +185,7 @@ tr:hover td{background:var(--bg3)}
       <div class="feature"><h4>🤖 IA Gratuita</h4><p>Groq + Llama 3 analiza todo y genera estrategia editorial.</p></div>
       <div class="feature"><h4>📊 Masivo</h4><p>Analiza hasta 10 keywords simultáneamente.</p></div>
     </div>
-    <button class="btn" onclick="document.getElementById('kw-input').focus()" style="margin-top:8px">Empezar →</button>
+    <button class="btn" onclick="document.getElementById('kw-input').focus();document.getElementById('kw-input').select()" style="margin-top:8px">Empezar →</button>
   </div>
 </div>
 
@@ -315,7 +315,7 @@ tr:hover td{background:var(--bg3)}
 </div>
 
 <!-- SETTINGS MODAL -->
-<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;align-items:center;justify-content:center">
+<div id="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center">
   <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:28px;width:460px;max-width:95vw">
     <div style="display:flex;justify-content:space-between;margin-bottom:18px">
       <h3 style="font-size:16px">⚙ Configuración</h3>
@@ -348,8 +348,11 @@ window.onload = () => {
 
 // ── Settings ─────────────────────────────────────────────────────────────────
 function showSettings() {
+  var m = document.getElementById('modal');
   document.getElementById('cfg-groq').value = GROQ_KEY;
-  document.getElementById('modal').style.display = 'flex';
+  m.style.display = 'flex';
+  m.style.alignItems = 'center';
+  m.style.justifyContent = 'center';
 }
 function closeModal() { document.getElementById('modal').style.display = 'none'; }
 function saveSettings() {
