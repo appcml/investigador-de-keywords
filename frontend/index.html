@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KeywordLab — Investigador SEO Gratuito</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+/* ── Reset & Variables ── */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--bg2:#151820;--bg3:#1c1f2b;--bg4:#222636;
+  --border:#2a2e40;--border2:#363b52;
+  --text:#e8eaf0;--text2:#a0a5bc;--text3:#666a82;
+  --accent:#4f6ef7;--accent2:#6d85fa;--accent-bg:rgba(79,110,247,0.12);
+  --green:#22c55e;--green-bg:rgba(34,197,94,0.12);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.12);
+  --red:#ef4444;--red-bg:rgba(239,68,68,0.12);
+  --purple:#a855f7;--purple-bg:rgba(168,85,247,0.12);
+  --cyan:#06b6d4;--cyan-bg:rgba(6,182,212,0.12);
+  --radius:8px;--radius-lg:14px;
+  --font:'Inter',system-ui,sans-serif;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+
+/* ── Layout ── */
+.app{display:grid;grid-template-columns:220px 1fr;grid-template-rows:56px 1fr;min-height:100vh}
+.topbar{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 20px}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;overflow-y:auto}
+.main{padding:24px;overflow-y:auto}
+
+/* ── Topbar ── */
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;color:var(--text)}
+.logo span{color:var(--accent)}
+.search-wrap{flex:1;max-width:600px;display:flex;gap:8px}
+.search-wrap input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 14px;height:36px;color:var(--text);font-size:13px}
+.search-wrap input:focus{outline:none;border-color:var(--accent)}
+.search-wrap select{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 10px;height:36px;color:var(--text);font-size:12px}
+.btn-primary{background:var(--accent);color:#fff;border:none;border-radius:var(--radius);padding:0 18px;height:36px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.btn-primary:hover{background:var(--accent2)}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+
+/* ── Sidebar ── */
+.nav-section{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;padding:12px 8px 4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.15s}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:var(--accent-bg);color:var(--accent)}
+.nav-item svg{width:16px;height:16px;flex-shrink:0}
+
+/* ── Cards & Grid ── */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.metric-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;position:relative;overflow:hidden}
+.metric-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.metric-card.accent::before{background:var(--accent)}
+.metric-card.green::before{background:var(--green)}
+.metric-card.amber::before{background:var(--amber)}
+.metric-card.purple::before{background:var(--purple)}
+.metric-label{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.metric-value{font-size:26px;font-weight:700;color:var(--text);line-height:1}
+.metric-sub{font-size:11px;color:var(--text3);margin-top:4px}
+.metric-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-top:6px}
+.badge-easy{background:var(--green-bg);color:var(--green)}
+.badge-med{background:var(--amber-bg);color:var(--amber)}
+.badge-hard{background:var(--red-bg);color:var(--red)}
+.badge-accent{background:var(--accent-bg);color:var(--accent)}
+.badge-purple{background:var(--purple-bg);color:var(--purple)}
+.badge-cyan{background:var(--cyan-bg);color:var(--cyan)}
+
+/* ── Content Sections ── */
+.section{display:none}
+.section.active{display:block}
+.section-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.card-title span{font-size:11px;color:var(--text3)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+
+/* ── Tables ── */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 12px;color:var(--text3);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg3)}
+.td-url{color:var(--accent);font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pos-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:4px;font-size:11px;font-weight:700;background:var(--accent-bg);color:var(--accent)}
+
+/* ── Chart ── */
+.chart-wrap{position:relative;height:180px}
+.chart-wrap-tall{position:relative;height:240px}
+
+/* ── Keywords list ── */
+.kw-list{display:flex;flex-direction:column;gap:6px}
+.kw-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg3);border-radius:var(--radius);cursor:pointer;transition:all 0.15s}
+.kw-item:hover{background:var(--bg4);border-left:2px solid var(--accent)}
+.kw-item span{font-size:12px;color:var(--text2)}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:2px;background:var(--bg3);border-radius:var(--radius);padding:3px;margin-bottom:16px}
+.tab{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.tab.active{background:var(--bg2);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,0.3)}
+.tab:hover:not(.active){color:var(--text)}
+
+/* ── Progress bar ── */
+.progress{height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;margin-top:4px}
+.progress-fill{height:100%;border-radius:3px;transition:width 0.6s ease}
+
+/* ── Loading ── */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:60px;color:var(--text3)}
+.spinner{width:32px;height:32px;border:3px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-steps{font-size:12px;text-align:center;line-height:1.8}
+.loading-step{color:var(--text3);transition:color 0.3s}
+.loading-step.done{color:var(--green)}
+.loading-step.active{color:var(--accent)}
+
+/* ── Welcome ── */
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:80px 20px;text-align:center}
+.welcome-icon{width:64px;height:64px;background:var(--accent-bg);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.welcome h2{font-size:22px;font-weight:700}
+.welcome p{color:var(--text2);max-width:440px;line-height:1.6}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:600px;text-align:left}
+.feature{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+.feature-icon{font-size:20px;margin-bottom:8px}
+.feature h4{font-size:13px;font-weight:600;margin-bottom:4px}
+.feature p{font-size:12px;color:var(--text2);line-height:1.5}
+
+/* ── Misc ── */
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;margin:2px;cursor:pointer;transition:all 0.15s}
+.tag:hover{opacity:0.8}
+.divider{height:1px;background:var(--border);margin:14px 0}
+.text-muted{color:var(--text3)}
+.text-green{color:var(--green)}
+.text-red{color:var(--red)}
+.text-accent{color:var(--accent)}
+.ai-insight{background:linear-gradient(135deg,rgba(79,110,247,0.08),rgba(168,85,247,0.08));border:1px solid rgba(79,110,247,0.25);border-radius:var(--radius);padding:14px;font-size:13px;line-height:1.7;color:var(--text2)}
+.api-config{background:var(--amber-bg);border:1px solid var(--amber);border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--amber);margin-bottom:16px;display:none}
+#api-config-bar{display:flex;align-items:center;justify-content:space-between}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .app{grid-template-columns:1fr;grid-template-rows:auto}
+  .sidebar{display:none}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .two-col,.three-col{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="logo">🔍 <span>Keyword</span>Lab</div>
+  <div class="search-wrap">
+    <input id="main-input" type="text" placeholder="Ingresa una keyword... ej: tren de aragua" />
+    <select id="country-sel">
+      <option value="CL">🇨🇱 Chile</option>
+      <option value="MX">🇲🇽 México</option>
+      <option value="AR">🇦🇷 Argentina</option>
+      <option value="ES">🇪🇸 España</option>
+      <option value="CO">🇨🇴 Colombia</option>
+      <option value="VE">🇻🇪 Venezuela</option>
+      <option value="US">🌐 Global</option>
+    </select>
+    <button class="btn-primary" id="analyze-btn" onclick="startAnalysis()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Analizar
+    </button>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+    <button onclick="showSection('bulk')" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:0 12px;height:32px;color:var(--text2);cursor:pointer;font-size:12px">Análisis masivo</button>
+    <button onclick="showSettings()" style="background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:18px" title="Configurar APIs">⚙</button>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="nav-section">Análisis</div>
+  <div class="nav-item active" onclick="showSection('overview')" id="nav-overview">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="6" height="18"/><rect x="9" y="8" width="6" height="13"/><rect x="16" y="13" width="6" height="8"/></svg>
+    Resumen general
+  </div>
+  <div class="nav-item" onclick="showSection('trends')" id="nav-trends">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    Tendencias
+  </div>
+  <div class="nav-item" onclick="showSection('serp')" id="nav-serp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    Resultados SERP
+  </div>
+  <div class="nav-item" onclick="showSection('keywords')" id="nav-keywords">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+    Keywords
+  </div>
+  <div class="nav-item" onclick="showSection('youtube')" id="nav-youtube">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+    YouTube
+  </div>
+  <div class="nav-item" onclick="showSection('ai')" id="nav-ai">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2"/><path d="M12 6v6l4 2"/></svg>
+    Estrategia IA
+  </div>
+  <div class="nav-section">Herramientas</div>
+  <div class="nav-item" onclick="showSection('autocomplete')" id="nav-autocomplete">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    Autocompletado
+  </div>
+  <div class="nav-item" onclick="showSection('compare')" id="nav-compare">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+    Comparar
+  </div>
+  <div class="nav-item" onclick="showSection('bulk')" id="nav-bulk">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    Análisis masivo
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- API Config notice -->
+<div class="api-config" id="api-warn">
+  <div id="api-config-bar">
+    <span>⚠ Algunas APIs no están configuradas. Los datos de SERP y YouTube requieren API keys gratuitas.</span>
+    <button onclick="showSettings()" style="background:var(--amber);color:#000;border:none;border-radius:4px;padding:4px 10px;cursor:pointer;font-size:11px;font-weight:600">Configurar</button>
+  </div>
+</div>
+
+<!-- ─── WELCOME ─── -->
+<div id="sec-welcome" class="section active">
+  <div class="welcome">
+    <div class="welcome-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4f6ef7" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+    <h2>KeywordLab — Investigador SEO Gratuito</h2>
+    <p>Analiza keywords usando datos reales de Google Trends, SERP, YouTube, Wikipedia y Reddit, potenciado con IA.</p>
+    <div class="features-grid">
+      <div class="feature"><div class="feature-icon">📈</div><h4>Tendencias reales</h4><p>Google Trends con datos históricos de 12 semanas y consultas en ascenso.</p></div>
+      <div class="feature"><div class="feature-icon">🎯</div><h4>Análisis SERP</h4><p>Primeros 10 resultados de Google con extracción de People Also Ask.</p></div>
+      <div class="feature"><div class="feature-icon">🤖</div><h4>Estrategia IA</h4><p>Claude analiza todos los datos y genera estrategia editorial y de contenido.</p></div>
+      <div class="feature"><div class="feature-icon">▶️</div><h4>YouTube insights</h4><p>Demanda de contenido en video y estadísticas de los videos más vistos.</p></div>
+      <div class="feature"><div class="feature-icon">💡</div><h4>Autocompletado</h4><p>Cientos de variaciones de Google Suggest con modificadores y letras A–Z.</p></div>
+      <div class="feature"><div class="feature-icon">📊</div><h4>Análisis masivo</h4><p>Analiza hasta 10 keywords simultáneamente y compáralas.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── OVERVIEW ─── -->
+<div id="sec-overview" class="section">
+  <div class="section-title">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="6" height="18"/><rect x="9" y="8" width="6" height="13"/><rect x="16" y="13" width="6" height="8"/></svg>
+    Resumen — <span id="ov-kw-title" style="color:var(--accent)"></span>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card accent">
+      <div class="metric-label">Volumen estimado</div>
+      <div class="metric-value" id="ov-volume">—</div>
+      <div class="metric-sub">búsquedas/mes</div>
+    </div>
+    <div class="metric-card green">
+      <div class="metric-label">Dificultad SEO</div>
+      <div class="metric-value" id="ov-diff">—</div>
+      <div id="ov-diff-badge"></div>
+    </div>
+    <div class="metric-card amber">
+      <div class="metric-label">CPC estimado</div>
+      <div class="metric-value" id="ov-cpc">—</div>
+      <div class="metric-sub">USD por clic</div>
+    </div>
+    <div class="metric-card purple">
+      <div class="metric-label">Interés actual</div>
+      <div class="metric-value" id="ov-interest">—</div>
+      <div class="metric-sub">Google Trends /100</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Tendencia 12 semanas <span>Google Trends</span></div>
+      <div class="chart-wrap"><canvas id="chart-trend"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Métricas adicionales</div>
+      <div style="display:flex;flex-direction:column;gap:12px" id="ov-extras"></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Intención de búsqueda</div>
+      <div id="ov-intent-box"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Queries en ascenso <span>Trends</span></div>
+      <div id="ov-rising"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Análisis IA — Resumen ejecutivo</div>
+    <div class="ai-insight" id="ov-summary">Realiza un análisis para ver los insights.</div>
+  </div>
+</div>
+
+<!-- ─── TRENDS ─── -->
+<div id="sec-trends" class="section">
+  <div class="section-title">📈 Tendencias Google — <span id="tr-kw-title" style="color:var(--accent)"></span></div>
+  <div class="card">
+    <div class="card-title">Interés a lo largo del tiempo (12 semanas)</div>
+    <div class="chart-wrap-tall"><canvas id="chart-trend-full"></canvas></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Consultas relacionadas — Top</div>
+      <table id="tbl-top-q"><thead><tr><th>Consulta</th><th>Valor</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-title">Consultas en ascenso 🔥</div>
+      <table id="tbl-rising-q"><thead><tr><th>Consulta</th><th>Variación</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Sugerencias de Google</div>
+    <div id="trends-suggestions"></div>
+  </div>
+</div>
+
+<!-- ─── SERP ─── -->
+<div id="sec-serp" class="section">
+  <div class="section-title">🔍 Resultados SERP — <span id="serp-kw-title" style="color:var(--accent)"></span></div>
+  <div class="two-col" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-title">People Also Ask</div>
+      <div id="serp-paa"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Búsquedas relacionadas</div>
+      <div id="serp-related"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Primeros resultados orgánicos</div>
+    <table>
+      <thead><tr><th>#</th><th>Título</th><th>Dominio</th><th>Fecha</th></tr></thead>
+      <tbody id="tbl-serp"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── KEYWORDS ─── -->
+<div id="sec-keywords" class="section">
+  <div class="section-title">💡 Keywords — <span id="kw-kw-title" style="color:var(--accent)"></span></div>
+  <div class="tabs" id="kw-tabs">
+    <div class="tab active" onclick="switchKwTab('longtail')">Cola larga</div>
+    <div class="tab" onclick="switchKwTab('lsi')">Semánticas (LSI)</div>
+    <div class="tab" onclick="switchKwTab('questions')">Preguntas</div>
+  </div>
+  <div class="card" id="kw-longtail"><div class="kw-list" id="list-longtail"></div></div>
+  <div class="card" id="kw-lsi" style="display:none"><div id="list-lsi"></div></div>
+  <div class="card" id="kw-questions" style="display:none"><div class="kw-list" id="list-questions"></div></div>
+</div>
+
+<!-- ─── YOUTUBE ─── -->
+<div id="sec-youtube" class="section">
+  <div class="section-title">▶ YouTube — <span id="yt-kw-title" style="color:var(--accent)"></span></div>
+  <div class="metrics-grid" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="metric-card accent"><div class="metric-label">Vistas totales top 8</div><div class="metric-value" id="yt-total-views">—</div></div>
+    <div class="metric-card green"><div class="metric-label">Vistas promedio</div><div class="metric-value" id="yt-avg-views">—</div></div>
+    <div class="metric-card purple"><div class="metric-label">Videos encontrados</div><div class="metric-value" id="yt-count">—</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Videos más vistos</div>
+    <table>
+      <thead><tr><th>#</th><th>Título</th><th>Canal</th><th>Vistas</th><th>Likes</th><th>Fecha</th></tr></thead>
+      <tbody id="tbl-youtube"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── AI STRATEGY ─── -->
+<div id="sec-ai" class="section">
+  <div class="section-title">🤖 Estrategia IA — <span id="ai-kw-title" style="color:var(--accent)"></span></div>
+  <div class="metrics-grid">
+    <div class="metric-card accent"><div class="metric-label">Potencial SEO</div><div class="metric-value" id="ai-seo-score">—</div><div class="metric-sub">/100</div></div>
+    <div class="metric-card green"><div class="metric-label">Monetización</div><div class="metric-value" id="ai-monetization">—</div></div>
+    <div class="metric-card amber"><div class="metric-label">Estacionalidad</div><div class="metric-value" id="ai-seasonality">—</div></div>
+    <div class="metric-card purple"><div class="metric-label">Tendencia</div><div class="metric-value" id="ai-trend-dir">—</div></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Tipo de contenido recomendado</div>
+      <div id="ai-content-type" style="font-size:14px;line-height:1.7;color:var(--text2)"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ángulo editorial para noticias</div>
+      <div id="ai-editorial" style="font-size:14px;line-height:1.7;color:var(--text2)"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Oportunidad de contenido (Content Gap)</div>
+    <div class="ai-insight" id="ai-gap"></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Debilidades de competidores</div>
+      <div id="ai-weaknesses" style="font-size:13px;line-height:1.7;color:var(--text2)"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Preguntas que la gente hace</div>
+      <div id="ai-questions-list"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Resumen estratégico completo</div>
+    <div class="ai-insight" id="ai-full-summary"></div>
+  </div>
+</div>
+
+<!-- ─── AUTOCOMPLETE ─── -->
+<div id="sec-autocomplete" class="section">
+  <div class="section-title">💬 Autocompletado — <span id="ac-kw-title" style="color:var(--accent)"></span></div>
+  <div class="card">
+    <div class="card-title">Sugerencias con modificadores <span id="ac-mod-count"></span></div>
+    <div id="ac-mod-list"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Sugerencias A–Z <span id="ac-alpha-count"></span></div>
+    <div id="ac-alpha-list"></div>
+  </div>
+</div>
+
+<!-- ─── COMPARE ─── -->
+<div id="sec-compare" class="section">
+  <div class="section-title">📊 Comparar keywords</div>
+  <div class="card">
+    <div style="display:flex;gap:10px;align-items:flex-end">
+      <div style="flex:1"><div style="font-size:12px;color:var(--text3);margin-bottom:6px">Keyword A</div>
+        <input id="cmp-a" type="text" placeholder="ej: tren de aragua" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:36px;color:var(--text);font-size:13px">
+      </div>
+      <div style="flex:1"><div style="font-size:12px;color:var(--text3);margin-bottom:6px">Keyword B</div>
+        <input id="cmp-b" type="text" placeholder="ej: bukele el salvador" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:36px;color:var(--text);font-size:13px">
+      </div>
+      <button class="btn-primary" onclick="runCompare()">Comparar</button>
+    </div>
+  </div>
+  <div id="compare-results"></div>
+</div>
+
+<!-- ─── BULK ─── -->
+<div id="sec-bulk" class="section">
+  <div class="section-title">📋 Análisis masivo</div>
+  <div class="card">
+    <div style="font-size:12px;color:var(--text3);margin-bottom:8px">Ingresa hasta 10 keywords (una por línea)</div>
+    <textarea id="bulk-input" rows="8" placeholder="tren de aragua&#10;bukele el salvador&#10;tecnología 2026&#10;crisis económica chile&#10;..." style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:12px;color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn-primary" onclick="runBulk()">Analizar todas</button>
+      <span style="font-size:12px;color:var(--text3);align-self:center">Los módulos Trends + Autocompletado + IA se ejecutan para cada keyword</span>
+    </div>
+  </div>
+  <div id="bulk-results"></div>
+</div>
+
+<!-- ─── LOADING ─── -->
+<div id="sec-loading" class="section">
+  <div class="loading">
+    <div class="spinner"></div>
+    <div style="font-size:16px;font-weight:600;color:var(--text)" id="load-kw"></div>
+    <div class="loading-steps" id="load-steps"></div>
+  </div>
+</div>
+
+<!-- ─── SETTINGS MODAL ─── -->
+<div id="settings-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center">
+  <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:28px;width:480px;max-width:95vw">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h3>Configurar APIs</h3>
+      <button onclick="closeSettings()" style="background:transparent;border:none;color:var(--text3);font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:5px">Backend URL (por defecto: localhost:8000)</div>
+        <input id="cfg-backend" type="text" placeholder="http://localhost:8000" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:36px;color:var(--text);font-size:13px">
+      </div>
+      <div style="font-size:12px;color:var(--text3);padding:10px;background:var(--bg3);border-radius:var(--radius);line-height:1.7">
+        📌 Las API keys se configuran en el archivo <code style="color:var(--accent)">.env</code> del backend.<br>
+        ✅ <strong>Gratis sin config:</strong> Google Trends, Wikipedia, Reddit, Autocompletado, IA<br>
+        🔑 <strong>Requieren key:</strong> SerpAPI (100/mes gratis), YouTube Data API (gratis)
+      </div>
+      <button class="btn-primary" onclick="saveSettings()" style="align-self:flex-start">Guardar</button>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+// ── Config ──────────────────────────────────────────────────────────────────
+let BACKEND = localStorage.getItem('kwlab_backend') || 'http://localhost:8000';
+let currentData = null;
+let trendChart = null, trendChartFull = null;
+
+// ── Navigation ──────────────────────────────────────────────────────────────
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sec = document.getElementById('sec-' + name);
+  const nav = document.getElementById('nav-' + name);
+  if (sec) sec.classList.add('active');
+  if (nav) nav.classList.add('active');
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function fmt(n) { return n ? Number(n).toLocaleString('es-CL') : '—'; }
+function diffBadge(n) {
+  if (!n && n !== 0) return '';
+  if (n < 40) return `<span class="metric-badge badge-easy">⬆ Fácil</span>`;
+  if (n < 65) return `<span class="metric-badge badge-med">◆ Medio</span>`;
+  return `<span class="metric-badge badge-hard">⬇ Difícil</span>`;
+}
+function tag(text, cls='badge-accent', onclick='') {
+  return `<span class="tag ${cls}" ${onclick?`onclick="${onclick}"`:''}>${text}</span>`;
+}
+
+// ── Chart helpers ────────────────────────────────────────────────────────────
+function buildTrendChart(canvasId, data, label='Interés') {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const existing = Chart.getChart(canvasId);
+  if (existing) existing.destroy();
+
+  const labels = data.map((_, i) => `S${i + 1}`);
+  return new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label,
+        data,
+        borderColor: '#4f6ef7',
+        backgroundColor: 'rgba(79,110,247,0.08)',
+        borderWidth: 2,
+        pointRadius: 2,
+        tension: 0.4,
+        fill: true,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#666a82', font: { size: 10 } } },
+        y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#666a82', font: { size: 10 } }, min: 0, max: 100 }
+      }
+    }
+  });
+}
+
+// ── Analysis ─────────────────────────────────────────────────────────────────
+async function startAnalysis() {
+  const kw = document.getElementById('main-input').value.trim();
+  if (!kw) { document.getElementById('main-input').style.borderColor = 'var(--red)'; return; }
+  document.getElementById('main-input').style.borderColor = '';
+
+  const country = document.getElementById('country-sel').value;
+  const btn = document.getElementById('analyze-btn');
+  btn.disabled = true;
+
+  const steps = ['Google Trends', 'SERP', 'YouTube', 'Wikipedia', 'Reddit', 'Autocompletado', 'Análisis IA'];
+  showSection('loading');
+  document.getElementById('load-kw').textContent = `Analizando: "${kw}"`;
+  document.getElementById('load-steps').innerHTML = steps.map((s, i) =>
+    `<div class="loading-step" id="ls-${i}">⏳ ${s}</div>`
+  ).join('');
+
+  // Simular progreso visual
+  let stepIdx = 0;
+  const stepInterval = setInterval(() => {
+    if (stepIdx > 0) {
+      document.getElementById(`ls-${stepIdx - 1}`).className = 'loading-step done';
+      document.getElementById(`ls-${stepIdx - 1}`).innerHTML = document.getElementById(`ls-${stepIdx - 1}`).innerHTML.replace('⏳','✅');
+    }
+    if (stepIdx < steps.length) {
+      const el = document.getElementById(`ls-${stepIdx}`);
+      if (el) { el.className = 'loading-step active'; el.innerHTML = el.innerHTML.replace('⏳','⚡'); }
+      stepIdx++;
+    }
+  }, 800);
+
+  try {
+    const res = await fetch(`${BACKEND}/api/analyze?q=${encodeURIComponent(kw)}&country=${country}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    currentData = await res.json();
+
+    clearInterval(stepInterval);
+    steps.forEach((_, i) => {
+      const el = document.getElementById(`ls-${i}`);
+      if (el) { el.className = 'loading-step done'; el.innerHTML = el.innerHTML.replace('⏳','✅').replace('⚡','✅'); }
+    });
+
+    await new Promise(r => setTimeout(r, 500));
+    populateAll(currentData);
+    showSection('overview');
+
+  } catch (e) {
+    clearInterval(stepInterval);
+    showSection('overview');
+    document.getElementById('ov-summary').textContent = `Error: ${e.message}. ¿Está corriendo el backend en ${BACKEND}?`;
+  }
+  btn.disabled = false;
+}
+
+// ── Populate ─────────────────────────────────────────────────────────────────
+function populateAll(d) {
+  const kw = d.keyword;
+  const trends = d.data.trends || {};
+  const ai = d.data.ai || {};
+  const serp = d.data.serp || {};
+  const yt = d.data.youtube || {};
+  const ac = d.data.autocomplete || {};
+
+  // ── Overview ──
+  document.getElementById('ov-kw-title').textContent = kw;
+  document.getElementById('ov-volume').textContent = fmt(ai.volume_estimate);
+  document.getElementById('ov-diff').textContent = ai.difficulty ? ai.difficulty + '%' : '—';
+  document.getElementById('ov-diff-badge').innerHTML = diffBadge(ai.difficulty);
+  document.getElementById('ov-cpc').textContent = ai.cpc_estimate ? '$' + Number(ai.cpc_estimate).toFixed(2) : '—';
+  document.getElementById('ov-interest').textContent = trends.current_interest ?? '—';
+
+  if (trends.trend_12w && trends.trend_12w.length) {
+    buildTrendChart('chart-trend', trends.trend_12w);
+  }
+
+  // Extras
+  const extras = [
+    ['Densidad competitiva', ai.competitive_density ?? '—'],
+    ['Potencial monetización', ai.monetization_potential ?? '—'],
+    ['Estacionalidad', ai.seasonality ?? '—'],
+    ['Tendencia', ai.trend_direction ?? '—'],
+    ['Wikipedia 30d', fmt(d.data.wiki?.views_30d) + ' vistas'],
+    ['Reddit posts', fmt(d.data.reddit?.total_posts_found)],
+  ];
+  document.getElementById('ov-extras').innerHTML = extras.map(([l, v]) => `
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:12px;color:var(--text3)">${l}</span>
+      <span style="font-size:13px;font-weight:600">${v}</span>
+    </div>
+    <div class="divider" style="margin:6px 0"></div>
+  `).join('');
+
+  // Intent box
+  const intentColors = {Informacional:'badge-accent',Navegacional:'badge-cyan',Transaccional:'badge-green',Comercial:'badge-purple'};
+  const intentDesc = {Informacional:'El usuario busca información, ideal para artículos y noticias.',Navegacional:'El usuario busca un sitio específico.',Transaccional:'El usuario quiere realizar una acción o compra.',Comercial:'El usuario evalúa opciones antes de comprar.'};
+  const intent = ai.intent || 'Informacional';
+  document.getElementById('ov-intent-box').innerHTML = `
+    <span class="metric-badge ${intentColors[intent] || 'badge-accent'}" style="font-size:14px;padding:6px 14px">${intent}</span>
+    <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.6">${intentDesc[intent] || ''}</p>
+    ${ai.best_content_type ? `<p style="font-size:12px;color:var(--text3);margin-top:8px">Formato ideal: <strong style="color:var(--text)">${ai.best_content_type}</strong></p>` : ''}
+  `;
+
+  // Rising queries
+  const rising = trends.rising_queries || [];
+  document.getElementById('ov-rising').innerHTML = rising.length
+    ? rising.slice(0,8).map(q => `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px"><span>${q.query || q}</span><span class="text-green" style="font-size:11px">${q.value ? '+' + fmt(q.value) + '%' : '↑'}</span></div>`).join('')
+    : '<span class="text-muted" style="font-size:12px">Sin datos de tendencias</span>';
+
+  document.getElementById('ov-summary').textContent = ai.summary || 'Análisis completado.';
+
+  // ── Trends section ──
+  document.getElementById('tr-kw-title').textContent = kw;
+  if (trends.trend_12w && trends.trend_12w.length) buildTrendChart('chart-trend-full', trends.trend_12w);
+
+  const fillTable = (id, rows, cols) => {
+    const tbody = document.getElementById(id)?.querySelector('tbody');
+    if (!tbody) return;
+    tbody.innerHTML = rows.slice(0,10).map(r =>
+      `<tr>${cols.map(c => `<td>${r[c] ?? r}</td>`).join('')}</tr>`
+    ).join('') || '<tr><td colspan="2" class="text-muted">Sin datos</td></tr>';
+  };
+  fillTable('tbl-top-q', trends.top_queries || [], ['query','value']);
+  fillTable('tbl-rising-q', trends.rising_queries || [], ['query','value']);
+
+  document.getElementById('trends-suggestions').innerHTML = (trends.suggestions || []).map(s =>
+    tag(s.title || s, 'badge-accent', `setKw('${(s.title || s).replace(/'/g,"\\'")}')`)
+  ).join('');
+
+  // ── SERP ──
+  document.getElementById('serp-kw-title').textContent = kw;
+  document.getElementById('serp-paa').innerHTML = (serp.people_also_ask || []).map(q =>
+    `<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;cursor:pointer;color:var(--text2)" onclick="setKw('${q.replace(/'/g,"\\'")}')">❓ ${q}</div>`
+  ).join('') || '<span class="text-muted" style="font-size:12px">SerpAPI no configurada</span>';
+
+  document.getElementById('serp-related').innerHTML = (serp.related_searches || []).map(q =>
+    `<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;cursor:pointer;color:var(--accent)" onclick="setKw('${q.replace(/'/g,"\\'")}')">→ ${q}</div>`
+  ).join('') || '<span class="text-muted" style="font-size:12px">Sin datos</span>';
+
+  document.getElementById('tbl-serp').innerHTML = (serp.results || []).map(r => `
+    <tr>
+      <td><span class="pos-badge">${r.position}</span></td>
+      <td><div style="font-size:13px;font-weight:500">${r.title || '—'}</div><div class="td-url">${r.snippet || ''}</div></td>
+      <td><span style="font-size:12px;color:var(--accent2)">${r.domain || '—'}</span></td>
+      <td style="font-size:11px;color:var(--text3)">${r.date || '—'}</td>
+    </tr>
+  `).join('') || '<tr><td colspan="4" class="text-muted">SerpAPI no configurada</td></tr>';
+
+  // ── Keywords ──
+  document.getElementById('kw-kw-title').textContent = kw;
+  document.getElementById('list-longtail').innerHTML = (ai.long_tail_keywords || []).map(k =>
+    `<div class="kw-item" onclick="setKw('${k.replace(/'/g,"\\'")}')"><span>${k}</span><span class="badge-accent" style="font-size:11px;padding:2px 6px;border-radius:4px;background:var(--accent-bg);color:var(--accent)">→ Analizar</span></div>`
+  ).join('') || '<span class="text-muted">Sin datos de IA</span>';
+
+  document.getElementById('list-lsi').innerHTML = (ai.lsi_keywords || []).map(k =>
+    tag(k, 'badge-purple', `setKw('${k.replace(/'/g,"\\'")}')`)
+  ).join('');
+
+  document.getElementById('list-questions').innerHTML = (ai.questions_to_answer || []).map(q =>
+    `<div class="kw-item" onclick="setKw('${q.replace(/'/g,"\\'")}')"><span>${q}</span><span style="font-size:11px;color:var(--text3)">Pregunta</span></div>`
+  ).join('') || '<span class="text-muted">Sin datos</span>';
+
+  // ── YouTube ──
+  document.getElementById('yt-kw-title').textContent = kw;
+  document.getElementById('yt-total-views').textContent = fmt(yt.total_views_top10);
+  document.getElementById('yt-avg-views').textContent = fmt(yt.avg_views);
+  document.getElementById('yt-count').textContent = (yt.videos || []).length;
+  document.getElementById('tbl-youtube').innerHTML = (yt.videos || []).map((v, i) => `
+    <tr>
+      <td><span class="pos-badge">${i + 1}</span></td>
+      <td><a href="https://youtube.com/watch?v=${v.id}" target="_blank" style="color:var(--text);font-size:12px;text-decoration:none">${v.title || '—'}</a></td>
+      <td style="font-size:12px;color:var(--text3)">${v.channel || '—'}</td>
+      <td style="font-size:12px;color:var(--accent)">${fmt(v.views)}</td>
+      <td style="font-size:12px;color:var(--text3)">${fmt(v.likes)}</td>
+      <td style="font-size:11px;color:var(--text3)">${v.published || '—'}</td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" class="text-muted">YouTube API no configurada</td></tr>';
+
+  // ── AI Strategy ──
+  document.getElementById('ai-kw-title').textContent = kw;
+  document.getElementById('ai-seo-score').textContent = ai.seo_score_potential ?? '—';
+  document.getElementById('ai-monetization').textContent = ai.monetization_potential ?? '—';
+  document.getElementById('ai-seasonality').textContent = ai.seasonality ?? '—';
+  document.getElementById('ai-trend-dir').textContent = ai.trend_direction ?? '—';
+  document.getElementById('ai-content-type').textContent = ai.best_content_type || '—';
+  document.getElementById('ai-editorial').textContent = ai.editorial_angle || '—';
+  document.getElementById('ai-gap').textContent = ai.content_gap || '—';
+  document.getElementById('ai-weaknesses').textContent = ai.competitor_weaknesses || '—';
+  document.getElementById('ai-full-summary').textContent = ai.summary || '—';
+  document.getElementById('ai-questions-list').innerHTML = (ai.questions_to_answer || []).map(q =>
+    `<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2)">❓ ${q}</div>`
+  ).join('');
+
+  // ── Autocomplete ──
+  document.getElementById('ac-kw-title').textContent = kw;
+  document.getElementById('ac-mod-count').textContent = `(${(ac.modifier_suggestions || []).length})`;
+  document.getElementById('ac-alpha-count').textContent = `(${(ac.alpha_suggestions || []).length})`;
+  document.getElementById('ac-mod-list').innerHTML = (ac.modifier_suggestions || []).map(s =>
+    tag(s, 'badge-accent', `setKw('${s.replace(/'/g,"\\'")}')`)
+  ).join('') || '<span class="text-muted" style="font-size:12px">Sin datos</span>';
+  document.getElementById('ac-alpha-list').innerHTML = (ac.alpha_suggestions || []).map(s =>
+    tag(s, 'badge-purple', `setKw('${s.replace(/'/g,"\\'")}')`)
+  ).join('') || '<span class="text-muted" style="font-size:12px">Sin datos</span>';
+}
+
+// ── Keyword tabs ──────────────────────────────────────────────────────────────
+function switchKwTab(name) {
+  document.querySelectorAll('#kw-tabs .tab').forEach((t, i) => {
+    const names = ['longtail','lsi','questions'];
+    t.classList.toggle('active', names[i] === name);
+  });
+  ['longtail','lsi','questions'].forEach(n => {
+    document.getElementById('kw-' + n).style.display = n === name ? 'block' : 'none';
+  });
+}
+
+// ── Compare ───────────────────────────────────────────────────────────────────
+async function runCompare() {
+  const a = document.getElementById('cmp-a').value.trim();
+  const b = document.getElementById('cmp-b').value.trim();
+  const country = document.getElementById('country-sel').value;
+  if (!a || !b) return;
+
+  document.getElementById('compare-results').innerHTML = '<div class="loading" style="padding:40px"><div class="spinner"></div><span>Comparando...</span></div>';
+
+  try {
+    const res = await fetch(`${BACKEND}/api/compare?a=${encodeURIComponent(a)}&b=${encodeURIComponent(b)}&country=${country}`);
+    const d = await res.json();
+    const da = d.keyword_a?.data?.ai || {};
+    const db = d.keyword_b?.data?.ai || {};
+    const ta = d.keyword_a?.data?.trends || {};
+    const tb = d.keyword_b?.data?.trends || {};
+
+    const col = (label, ai, tr, color) => `
+      <div class="card" style="border-top:3px solid ${color}">
+        <div class="card-title" style="font-size:16px;font-weight:700;color:${color}">${label}</div>
+        <div class="metrics-grid" style="grid-template-columns:1fr 1fr;margin-bottom:12px">
+          <div class="metric-card" style="--border:${color}33"><div class="metric-label">Volumen</div><div class="metric-value">${fmt(ai.volume_estimate)}</div></div>
+          <div class="metric-card"><div class="metric-label">Dificultad</div><div class="metric-value">${ai.difficulty ?? '—'}%</div></div>
+          <div class="metric-card"><div class="metric-label">CPC</div><div class="metric-value">$${Number(ai.cpc_estimate || 0).toFixed(2)}</div></div>
+          <div class="metric-card"><div class="metric-label">Interés Trends</div><div class="metric-value">${tr.current_interest ?? '—'}</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7">${ai.summary || '—'}</div>
+      </div>`;
+
+    document.getElementById('compare-results').innerHTML = `
+      <div class="two-col">
+        ${col(a, da, ta, '#4f6ef7')}
+        ${col(b, db, tb, '#a855f7')}
+      </div>`;
+  } catch (e) {
+    document.getElementById('compare-results').innerHTML = `<div class="card" style="color:var(--red)">Error: ${e.message}</div>`;
+  }
+}
+
+// ── Bulk ──────────────────────────────────────────────────────────────────────
+async function runBulk() {
+  const lines = document.getElementById('bulk-input').value.split('\n').map(l => l.trim()).filter(Boolean).slice(0, 10);
+  if (!lines.length) return;
+  const country = document.getElementById('country-sel').value;
+
+  document.getElementById('bulk-results').innerHTML = '<div class="loading" style="padding:40px"><div class="spinner"></div><span>Analizando ' + lines.length + ' keywords...</span></div>';
+
+  try {
+    const res = await fetch(`${BACKEND}/api/bulk?keywords=${encodeURIComponent(lines.join(','))}&country=${country}`);
+    const d = await res.json();
+
+    const rows = (d.results || []).map((r, i) => {
+      const ai = r.data?.ai || {};
+      const tr = r.data?.trends || {};
+      return `<tr>
+        <td style="font-weight:600">${lines[i]}</td>
+        <td>${fmt(ai.volume_estimate)}</td>
+        <td>${ai.difficulty ?? '—'}%</td>
+        <td>$${Number(ai.cpc_estimate || 0).toFixed(2)}</td>
+        <td>${tr.current_interest ?? '—'}/100</td>
+        <td>${ai.intent ?? '—'}</td>
+        <td>${ai.monetization_potential ?? '—'}</td>
+        <td><button class="btn-primary" style="font-size:11px;height:26px;padding:0 10px" onclick="setKw('${lines[i].replace(/'/g,"\\'")}');startAnalysis()">Ver detalle</button></td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('bulk-results').innerHTML = `
+      <div class="card">
+        <table>
+          <thead><tr><th>Keyword</th><th>Volumen</th><th>Dificultad</th><th>CPC</th><th>Trends</th><th>Intención</th><th>Monetización</th><th></th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+  } catch (e) {
+    document.getElementById('bulk-results').innerHTML = `<div class="card" style="color:var(--red)">Error: ${e.message}</div>`;
+  }
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function setKw(kw) {
+  document.getElementById('main-input').value = kw;
+}
+
+function showSettings() {
+  document.getElementById('cfg-backend').value = BACKEND;
+  document.getElementById('settings-modal').style.display = 'flex';
+}
+function closeSettings() {
+  document.getElementById('settings-modal').style.display = 'none';
+}
+function saveSettings() {
+  BACKEND = document.getElementById('cfg-backend').value || 'http://localhost:8000';
+  localStorage.setItem('kwlab_backend', BACKEND);
+  closeSettings();
+}
+
+// ── Keyboard shortcut ─────────────────────────────────────────────────────────
+document.getElementById('main-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startAnalysis();
+});
+</script>
+</body>
+</html>
