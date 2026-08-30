@@ -459,29 +459,22 @@ async function getTrends(kw, country) {
 async function getAutocomplete(kw, country) {
   const suggestions = new Set();
   const lang = hl(country);
-  const modifiers = ['', 'qué es', 'cómo', 'por qué', 'mejor', 'vs', '2025', '2026', 'gratis', 'sin'];
-  const proxies = [
-    q => `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://suggestqueries.google.com/complete/search?q=${encodeURIComponent(q)}&client=firefox&hl=${lang}&gl=${gl(country)}`)}`,
-    q => `https://corsproxy.io/?${encodeURIComponent(`https://suggestqueries.google.com/complete/search?q=${encodeURIComponent(q)}&client=firefox&hl=${lang}`)}`
-  ];
+  const modifiers = ['', 'que es', 'como', 'por que', 'mejor', 'vs', '2025', '2026', 'gratis'];
 
   const fetchSuggest = async (q) => {
-    for (const proxy of proxies) {
-      try {
-        const r = await fetch(proxy(q), { signal: AbortSignal.timeout(5000) });
-        const data = await r.json();
-        const items = Array.isArray(data) ? data[1] : [];
-        items.forEach(s => suggestions.add(s));
-        return;
-      } catch {}
-    }
+    try {
+      const url = `https://api.allorigins.win/raw?url=${encodeURIComponent('https://suggestqueries.google.com/complete/search?q=' + encodeURIComponent(q) + '&client=firefox&hl=' + lang)}`;
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 4000);
+      const r = await fetch(url, { signal: ctrl.signal });
+      clearTimeout(timer);
+      const data = await r.json();
+      if (Array.isArray(data) && data[1]) data[1].forEach(s => suggestions.add(s));
+    } catch {}
   };
 
-  const tasks = modifiers.map(mod => fetchSuggest(mod ? `${mod} ${kw}` : kw));
-  // A-Z
-  for (const l of 'abcdefghijklmnopqrstuvwxyz') {
-    tasks.push(fetchSuggest(`${kw} ${l}`));
-  }
+  const tasks = modifiers.map(mod => fetchSuggest(mod ? mod + ' ' + kw : kw));
+  for (const l of 'abcdefghijklmnopqrs') tasks.push(fetchSuggest(kw + ' ' + l));
   await Promise.allSettled(tasks);
   return [...suggestions];
 }
@@ -579,16 +572,18 @@ async function startAnalysis() {
   showSec('loading');
   startSteps(kw);
 
-  // Ejecutar todo en paralelo
-  const [ac, wiki, reddit] = await Promise.all([
-    getAutocomplete(kw, country),
-    getWiki(kw, hl(country)),
-    getReddit(kw)
+  // Ejecutar todo en paralelo con timeout de 12 segundos
+  const timeout = new Promise(resolve => setTimeout(() => resolve([[], null, null]), 12000));
+  const dataPromise = Promise.all([
+    getAutocomplete(kw, country).catch(() => []),
+    getWiki(kw, hl(country)).catch(() => null),
+    getReddit(kw).catch(() => null)
   ]);
+  const [ac, wiki, reddit] = await Promise.race([dataPromise, timeout]);
 
   stopSteps();
 
-  const ai = await getAI(kw, country, { ac, wiki, reddit });
+  const ai = await getAI(kw, country, { ac, wiki, reddit }).catch(() => null);
 
   currentData = { kw, country, ac, wiki, reddit, ai };
   populateAll(currentData);
