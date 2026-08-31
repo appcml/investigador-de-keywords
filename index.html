@@ -16,297 +16,244 @@
   --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.12);
   --red:#ef4444;--red-bg:rgba(239,68,68,0.12);
   --purple:#a855f7;--purple-bg:rgba(168,85,247,0.12);
-  --cyan:#06b6d4;--cyan-bg:rgba(6,182,212,0.12);
   --radius:8px;--radius-lg:14px;
-  --font:'Inter',system-ui,sans-serif;
 }
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
-.app{display:grid;grid-template-columns:220px 1fr;grid-template-rows:56px 1fr;min-height:100vh}
-.topbar{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 20px}
-.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;overflow-y:auto}
-.main{padding:24px;overflow-y:auto;height:calc(100vh - 56px)}
-.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;color:var(--text)}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+.app{display:grid;grid-template-columns:210px 1fr;grid-template-rows:54px 1fr;min-height:100vh}
+.topbar{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 16px}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:12px 10px;overflow-y:auto}
+.main{padding:20px;overflow-y:auto;height:calc(100vh - 54px)}
+.logo{font-weight:700;font-size:15px;white-space:nowrap}
 .logo span{color:var(--accent)}
-.search-wrap{flex:1;max-width:600px;display:flex;gap:8px}
-.search-wrap input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 14px;height:36px;color:var(--text);font-size:13px}
-.search-wrap input:focus{outline:none;border-color:var(--accent)}
-.search-wrap select{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 10px;height:36px;color:var(--text);font-size:12px}
-.btn{background:var(--accent);color:#fff;border:none;border-radius:var(--radius);padding:0 18px;height:36px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.sinput{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:34px;color:var(--text);font-size:13px;min-width:0}
+.sinput:focus{outline:none;border-color:var(--accent)}
+.sselect{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 8px;height:34px;color:var(--text);font-size:12px}
+.btn{background:var(--accent);color:#fff;border:none;border-radius:var(--radius);padding:0 16px;height:34px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap}
 .btn:hover{background:var(--accent2)}
 .btn:disabled{opacity:0.5;cursor:not-allowed}
-.btn-sm{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:28px;cursor:pointer;font-size:12px;display:inline-flex;align-items:center;gap:4px}
-.btn-sm:hover{color:var(--text);border-color:var(--accent)}
-.nav-section{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;padding:12px 8px 4px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.15s}
-.nav-item:hover{background:var(--bg3);color:var(--text)}
-.nav-item.active{background:var(--accent-bg);color:var(--accent)}
-.nav-item svg{width:16px;height:16px;flex-shrink:0}
-.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.metric-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;position:relative;overflow:hidden}
-.metric-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-.metric-card.blue::before{background:var(--accent)}
-.metric-card.green::before{background:var(--green)}
-.metric-card.amber::before{background:var(--amber)}
-.metric-card.purple::before{background:var(--purple)}
-.metric-label{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
-.metric-value{font-size:24px;font-weight:700;color:var(--text);line-height:1}
-.metric-sub{font-size:11px;color:var(--text3);margin-top:4px}
-.section{display:none}.section.active{display:block}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;margin-bottom:14px}
-.card-title{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.btnsm{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);border-radius:var(--radius);padding:0 10px;height:30px;cursor:pointer;font-size:12px}
+.btnsm:hover{color:var(--text);border-color:var(--accent)}
+.nav-s{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;padding:10px 8px 3px}
+.nav-i{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--text2)}
+.nav-i:hover{background:var(--bg3);color:var(--text)}
+.nav-i.on{background:var(--accent-bg);color:var(--accent)}
+.sec{display:none}.sec.on{display:block}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:12px}
+.ctitle{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.mc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;position:relative;overflow:hidden}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.mc.bl::before{background:var(--accent)}.mc.gr::before{background:var(--green)}.mc.am::before{background:var(--amber)}.mc.pu::before{background:var(--purple)}
+.ml{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.mv{font-size:22px;font-weight:700;line-height:1}
+.ms{font-size:11px;color:var(--text3);margin-top:3px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;padding:8px 10px;color:var(--text3);font-size:11px;font-weight:700;text-transform:uppercase;border-bottom:1px solid var(--border)}
-td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text)}
+th{text-align:left;padding:7px 10px;color:var(--text3);font-size:11px;font-weight:700;text-transform:uppercase;border-bottom:1px solid var(--border)}
+td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text)}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:var(--bg3)}
-.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
-.badge-green{background:var(--green-bg);color:var(--green)}
-.badge-amber{background:var(--amber-bg);color:var(--amber)}
-.badge-red{background:var(--red-bg);color:var(--red)}
-.badge-blue{background:var(--accent-bg);color:var(--accent)}
-.badge-purple{background:var(--purple-bg);color:var(--purple)}
-.badge-cyan{background:var(--cyan-bg);color:var(--cyan)}
-.chart-wrap{position:relative;height:180px}
-.chart-wrap-lg{position:relative;height:240px}
-.tag{display:inline-block;padding:3px 9px;border-radius:4px;font-size:12px;font-weight:500;margin:2px;cursor:pointer;background:var(--bg3);color:var(--text2);border:1px solid var(--border2);transition:all 0.15s}
+.badge{display:inline-flex;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600}
+.bg{background:var(--green-bg);color:var(--green)}.ba{background:var(--amber-bg);color:var(--amber)}.br{background:var(--red-bg);color:var(--red)}.bb{background:var(--accent-bg);color:var(--accent)}.bp{background:var(--purple-bg);color:var(--purple)}
+.tag{display:inline-block;padding:3px 8px;border-radius:4px;font-size:12px;margin:2px;cursor:pointer;background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}
 .tag:hover{border-color:var(--accent);color:var(--accent)}
-.ai-box{background:rgba(79,110,247,0.06);border:1px solid rgba(79,110,247,0.2);border-radius:var(--radius);padding:14px;font-size:13px;line-height:1.7;color:var(--text2)}
-.loading-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:80px 20px;text-align:center}
-.spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
+.aib{background:rgba(79,110,247,.07);border:1px solid rgba(79,110,247,.2);border-radius:var(--radius);padding:12px;font-size:13px;line-height:1.7;color:var(--text2)}
+.cw{position:relative;height:180px}.cwl{position:relative;height:220px}
+.kwrow{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--bg3);border-radius:var(--radius);margin-bottom:5px;cursor:pointer}
+.kwrow:hover{border-left:2px solid var(--accent);padding-left:8px}
+.kwrow span{font-size:11px;color:var(--text3)}
+.tabs{display:flex;gap:2px;background:var(--bg3);border-radius:var(--radius);padding:3px;margin-bottom:12px;width:fit-content}
+.tab{padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer}
+.tab.on{background:var(--bg2);color:var(--text)}
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:80px 20px;text-align:center}
+.spin{width:32px;height:32px;border:3px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.step-list{font-size:13px;line-height:2;color:var(--text3)}
-.step-list .done{color:var(--green)}
-.step-list .active{color:var(--accent);font-weight:600}
-.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:60px 20px;text-align:center}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:640px;text-align:left}
-.feature{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
-.feature h4{font-size:13px;font-weight:600;margin-bottom:4px}
-.feature p{font-size:12px;color:var(--text3);line-height:1.5}
-.setup-banner{background:var(--amber-bg);border:1px solid var(--amber);border-radius:var(--radius);padding:10px 16px;font-size:12px;color:var(--amber);display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.kw-row{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg3);border-radius:var(--radius);margin-bottom:6px;cursor:pointer;transition:all 0.15s}
-.kw-row:hover{border-left:2px solid var(--accent);padding-left:10px}
-.kw-row span{font-size:12px;color:var(--text3)}
-.tabs{display:flex;gap:2px;background:var(--bg3);border-radius:var(--radius);padding:3px;margin-bottom:14px;width:fit-content}
-.tab{padding:5px 14px;border-radius:6px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all 0.15s}
-.tab.active{background:var(--bg2);color:var(--text)}
-.tab:hover:not(.active){color:var(--text)}
-.pos{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:4px;font-size:11px;font-weight:700;background:var(--accent-bg);color:var(--accent)}
-.divider{height:1px;background:var(--border);margin:12px 0}
-@media(max-width:860px){
-  .app{grid-template-columns:1fr}
-  .sidebar{display:none}
-  .metrics-grid{grid-template-columns:1fr 1fr}
-  .two-col,.three-col{grid-template-columns:1fr}
-  .features{grid-template-columns:1fr}
-}
+.slist{font-size:13px;line-height:2;color:var(--text3)}
+.slist .done{color:var(--green)}.slist .act{color:var(--accent);font-weight:600}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:60px 20px;text-align:center}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:620px;text-align:left}
+.fi{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
+.fi h4{font-size:13px;font-weight:600;margin-bottom:3px}
+.fi p{font-size:12px;color:var(--text3);line-height:1.5}
+.modal-wrap{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:9999;align-items:center;justify-content:center}
+.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:24px;width:440px;max-width:95vw}
+@media(max-width:800px){.app{grid-template-columns:1fr}.sidebar{display:none}.mg{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.feat{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="app">
 
-<!-- TOPBAR -->
 <header class="topbar">
   <div class="logo">🔍 <span>Keyword</span>Lab</div>
-  <div class="search-wrap">
-    <input id="kw-input" type="text" placeholder="Ej: tren de aragua, Bukele, IA 2026..." />
-    <select id="country-sel">
-      <option value="CL">🇨🇱 Chile</option>
-      <option value="MX">🇲🇽 México</option>
-      <option value="AR">🇦🇷 Argentina</option>
-      <option value="ES">🇪🇸 España</option>
-      <option value="CO">🇨🇴 Colombia</option>
-      <option value="VE">🇻🇪 Venezuela</option>
-      <option value="US">🌐 Global</option>
-    </select>
-    <button class="btn" id="analyze-btn" onclick="startAnalysis()">🔍 Analizar</button>
-  </div>
-  <div style="margin-left:auto;display:flex;gap:8px">
-    <button class="btn-sm" onclick="showSec('compare')">⚖ Comparar</button>
-    <button class="btn-sm" onclick="showSec('bulk')">📋 Masivo</button>
-    <button class="btn-sm" onclick="showSettings()">⚙ Config</button>
+  <input class="sinput" id="kw-input" type="text" placeholder="Ej: tren de aragua, Bukele, IA 2026..." />
+  <select class="sselect" id="country-sel">
+    <option value="CL">🇨🇱 Chile</option>
+    <option value="MX">🇲🇽 México</option>
+    <option value="AR">🇦🇷 Argentina</option>
+    <option value="ES">🇪🇸 España</option>
+    <option value="CO">🇨🇴 Colombia</option>
+    <option value="VE">🇻🇪 Venezuela</option>
+    <option value="US">🌐 Global</option>
+  </select>
+  <button class="btn" id="abtn">🔍 Analizar</button>
+  <div style="margin-left:auto;display:flex;gap:6px">
+    <button class="btnsm" id="bcmp">⚖ Comparar</button>
+    <button class="btnsm" id="bbulk">📋 Masivo</button>
+    <button class="btnsm" id="bcfg">⚙ Config</button>
   </div>
 </header>
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
-  <div class="nav-section">Análisis</div>
-  <div class="nav-item active" id="nav-overview" onclick="showSec('overview')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="6" height="18"/><rect x="9" y="8" width="6" height="13"/><rect x="16" y="13" width="6" height="8"/></svg>Resumen
-  </div>
-  <div class="nav-item" id="nav-trends" onclick="showSec('trends')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Tendencias
-  </div>
-  <div class="nav-item" id="nav-keywords" onclick="showSec('keywords')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Keywords
-  </div>
-  <div class="nav-item" id="nav-autocomplete" onclick="showSec('autocomplete')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Autocompletado
-  </div>
-  <div class="nav-item" id="nav-wiki" onclick="showSec('wiki')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Wikipedia
-  </div>
-  <div class="nav-item" id="nav-reddit" onclick="showSec('reddit')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Reddit
-  </div>
-  <div class="nav-item" id="nav-ai" onclick="showSec('ai')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>Estrategia IA
-  </div>
-  <div class="nav-section">Herramientas</div>
-  <div class="nav-item" id="nav-compare" onclick="showSec('compare')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>Comparar
-  </div>
-  <div class="nav-item" id="nav-bulk" onclick="showSec('bulk')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Análisis masivo
-  </div>
+  <div class="nav-s">Análisis</div>
+  <div class="nav-i on" id="nav-overview">📊 Resumen</div>
+  <div class="nav-i" id="nav-trends">📈 Tendencias</div>
+  <div class="nav-i" id="nav-keywords">💡 Keywords</div>
+  <div class="nav-i" id="nav-autocomplete">💬 Autocompletado</div>
+  <div class="nav-i" id="nav-wiki">📖 Wikipedia</div>
+  <div class="nav-i" id="nav-reddit">🗨 Reddit</div>
+  <div class="nav-i" id="nav-ai">🤖 Estrategia IA</div>
+  <div class="nav-s">Herramientas</div>
+  <div class="nav-i" id="nav-compare">⚖ Comparar</div>
+  <div class="nav-i" id="nav-bulk">📋 Análisis masivo</div>
 </aside>
 
-<!-- MAIN -->
 <main class="main">
 
-<!-- SETUP BANNER -->
-<div class="setup-banner" id="setup-banner" style="display:none">
-  ⚠ Groq API Key no configurada — la IA no funcionará.
-  <button class="btn-sm" onclick="showSettings()">Configurar ahora</button>
-</div>
-
 <!-- WELCOME -->
-<div id="sec-welcome" class="section active">
+<div id="sec-welcome" class="sec on">
   <div class="welcome">
     <div style="font-size:48px">🔍</div>
-    <h2 style="font-size:22px;font-weight:700">KeywordLab — 100% Gratis</h2>
-    <p style="color:var(--text2);max-width:420px;line-height:1.6">Analiza keywords con Google Trends, Wikipedia, Reddit, autocompletado Google y análisis estratégico con IA (Groq/Llama 3). Sin backend, sin servidor.</p>
-    <div class="features">
-      <div class="feature"><h4>📈 Google Trends</h4><p>Tendencias reales de los últimos 3 meses y consultas en ascenso.</p></div>
-      <div class="feature"><h4>💬 Autocompletado</h4><p>Cientos de variaciones de Google Suggest con A–Z y modificadores.</p></div>
-      <div class="feature"><h4>📖 Wikipedia</h4><p>Contexto del tema y vistas reales del último mes.</p></div>
-      <div class="feature"><h4>🗨 Reddit</h4><p>Discusiones reales para medir sentimiento e interés.</p></div>
-      <div class="feature"><h4>🤖 IA Gratuita</h4><p>Groq + Llama 3 analiza todo y genera estrategia editorial.</p></div>
-      <div class="feature"><h4>📊 Masivo</h4><p>Analiza hasta 10 keywords simultáneamente.</p></div>
+    <h2 style="font-size:20px;font-weight:700">KeywordLab — 100% Gratis</h2>
+    <p style="color:var(--text2);max-width:400px;line-height:1.6">Analiza keywords con Wikipedia, Reddit, autocompletado Google y estrategia con IA (Groq/Llama 3). Sin backend, sin servidor.</p>
+    <div class="feat">
+      <div class="fi"><h4>💬 Autocompletado</h4><p>Variaciones de Google Suggest con A–Z y modificadores.</p></div>
+      <div class="fi"><h4>📖 Wikipedia</h4><p>Contexto y vistas reales del último mes.</p></div>
+      <div class="fi"><h4>🗨 Reddit</h4><p>Discusiones reales para medir sentimiento.</p></div>
+      <div class="fi"><h4>🤖 IA Gratuita</h4><p>Groq + Llama 3 genera estrategia editorial.</p></div>
+      <div class="fi"><h4>⚖ Comparar</h4><p>Compara dos keywords frente a frente.</p></div>
+      <div class="fi"><h4>📋 Masivo</h4><p>Analiza hasta 10 keywords a la vez.</p></div>
     </div>
-    <button class="btn" onclick="document.getElementById('kw-input').focus();document.getElementById('kw-input').select()" style="margin-top:8px">Empezar →</button>
   </div>
 </div>
 
 <!-- LOADING -->
-<div id="sec-loading" class="section">
-  <div class="loading-wrap">
-    <div class="spinner"></div>
-    <div style="font-size:16px;font-weight:700" id="load-title"></div>
-    <div class="step-list" id="load-steps"></div>
+<div id="sec-loading" class="sec">
+  <div class="loading">
+    <div class="spin"></div>
+    <div style="font-size:15px;font-weight:700" id="load-title"></div>
+    <div class="slist" id="load-steps"></div>
   </div>
 </div>
 
 <!-- OVERVIEW -->
-<div id="sec-overview" class="section">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">Resumen — <span id="ov-kw" style="color:var(--accent)"></span></div>
-  <div class="metrics-grid">
-    <div class="metric-card blue"><div class="metric-label">Volumen estimado</div><div class="metric-value" id="ov-vol">—</div><div class="metric-sub">búsquedas/mes</div></div>
-    <div class="metric-card green"><div class="metric-label">Dificultad SEO</div><div class="metric-value" id="ov-diff">—</div><div id="ov-diff-b" style="margin-top:6px"></div></div>
-    <div class="metric-card amber"><div class="metric-label">CPC estimado</div><div class="metric-value" id="ov-cpc">—</div><div class="metric-sub">USD por clic</div></div>
-    <div class="metric-card purple"><div class="metric-label">Interés Trends</div><div class="metric-value" id="ov-interest">—</div><div class="metric-sub">/100 actual</div></div>
+<div id="sec-overview" class="sec">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">Resumen — <span id="ov-kw" style="color:var(--accent)"></span></div>
+  <div class="mg">
+    <div class="mc bl"><div class="ml">Volumen estimado</div><div class="mv" id="ov-vol">—</div><div class="ms">búsquedas/mes</div></div>
+    <div class="mc gr"><div class="ml">Dificultad SEO</div><div class="mv" id="ov-diff">—</div><div id="ov-db" style="margin-top:5px"></div></div>
+    <div class="mc am"><div class="ml">CPC estimado</div><div class="mv" id="ov-cpc">—</div><div class="ms">USD por clic</div></div>
+    <div class="mc pu"><div class="ml">Wikipedia 30d</div><div class="mv" id="ov-wiki">—</div><div class="ms">vistas</div></div>
   </div>
-  <div class="two-col">
-    <div class="card"><div class="card-title">Tendencia 12 semanas</div><div class="chart-wrap"><canvas id="chart-ov"></canvas></div></div>
-    <div class="card"><div class="card-title">Datos clave</div><div id="ov-extras"></div></div>
+  <div class="two">
+    <div class="card"><div class="ctitle">Datos clave</div><div id="ov-extras"></div></div>
+    <div class="card"><div class="ctitle">Intención de búsqueda</div><div id="ov-intent"></div></div>
   </div>
-  <div class="two-col">
-    <div class="card"><div class="card-title">Intención de búsqueda</div><div id="ov-intent"></div></div>
-    <div class="card"><div class="card-title">🔥 Queries en ascenso</div><div id="ov-rising"></div></div>
-  </div>
-  <div class="card"><div class="card-title">Resumen IA</div><div class="ai-box" id="ov-summary">—</div></div>
+  <div class="card"><div class="ctitle">Keywords relacionadas (IA)</div><div id="ov-related"></div></div>
+  <div class="card"><div class="ctitle">Resumen IA</div><div class="aib" id="ov-summary">Ingresa una keyword y presiona Analizar.</div></div>
 </div>
 
 <!-- TRENDS -->
-<div id="sec-trends" class="section">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">Tendencias — <span id="tr-kw" style="color:var(--accent)"></span></div>
-  <div class="card"><div class="card-title">Interés a lo largo del tiempo</div><div class="chart-wrap-lg"><canvas id="chart-tr"></canvas></div></div>
-  <div class="two-col">
-    <div class="card"><div class="card-title">Top consultas relacionadas</div><table><thead><tr><th>Consulta</th><th>Valor</th></tr></thead><tbody id="tbl-top"></tbody></table></div>
-    <div class="card"><div class="card-title">Consultas en ascenso 🔥</div><table><thead><tr><th>Consulta</th><th>Variación</th></tr></thead><tbody id="tbl-rising"></tbody></table></div>
+<div id="sec-trends" class="sec">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">Tendencias — <span id="tr-kw" style="color:var(--accent)"></span></div>
+  <div class="card"><div class="ctitle">Sugerencias Google</div><div id="tr-sugg"></div></div>
+  <div class="two">
+    <div class="card"><div class="ctitle">Keywords cola larga</div><table><thead><tr><th>Keyword</th></tr></thead><tbody id="tbl-lt"></tbody></table></div>
+    <div class="card"><div class="ctitle">Preguntas frecuentes</div><table><thead><tr><th>Pregunta</th></tr></thead><tbody id="tbl-qs"></tbody></table></div>
   </div>
-  <div class="card"><div class="card-title">Sugerencias de Google</div><div id="tr-suggestions"></div></div>
 </div>
 
 <!-- KEYWORDS -->
-<div id="sec-keywords" class="section">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">Keywords — <span id="kw-kw" style="color:var(--accent)"></span></div>
+<div id="sec-keywords" class="sec">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">Keywords — <span id="kw-kw" style="color:var(--accent)"></span></div>
   <div class="tabs">
-    <div class="tab active" onclick="kwTab('longtail',this)">Cola larga</div>
-    <div class="tab" onclick="kwTab('lsi',this)">Semánticas LSI</div>
-    <div class="tab" onclick="kwTab('questions',this)">Preguntas</div>
+    <div class="tab on" id="tab-lt">Cola larga</div>
+    <div class="tab" id="tab-lsi">Semánticas LSI</div>
+    <div class="tab" id="tab-qs">Preguntas</div>
   </div>
-  <div id="kw-longtail" class="card"><div id="list-longtail"></div></div>
-  <div id="kw-lsi" class="card" style="display:none"><div id="list-lsi"></div></div>
-  <div id="kw-questions" class="card" style="display:none"><div id="list-questions"></div></div>
+  <div class="card" id="kw-lt"><div id="list-lt"></div></div>
+  <div class="card" id="kw-lsi" style="display:none"><div id="list-lsi"></div></div>
+  <div class="card" id="kw-qs" style="display:none"><div id="list-qs"></div></div>
 </div>
 
 <!-- AUTOCOMPLETE -->
-<div id="sec-autocomplete" class="section">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">Autocompletado — <span id="ac-kw" style="color:var(--accent)"></span></div>
-  <div class="card"><div class="card-title">Sugerencias con modificadores <span id="ac-mod-n" style="font-weight:400;color:var(--text3)"></span></div><div id="ac-mods"></div></div>
-  <div class="card"><div class="card-title">Sugerencias A–Z <span id="ac-az-n" style="font-weight:400;color:var(--text3)"></span></div><div id="ac-az"></div></div>
+<div id="sec-autocomplete" class="sec">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">Autocompletado — <span id="ac-kw" style="color:var(--accent)"></span></div>
+  <div class="card"><div class="ctitle">Sugerencias con modificadores <span id="ac-n1" style="font-weight:400;color:var(--text3)"></span></div><div id="ac-mods"></div></div>
+  <div class="card"><div class="ctitle">Sugerencias A–Z <span id="ac-n2" style="font-weight:400;color:var(--text3)"></span></div><div id="ac-az"></div></div>
 </div>
 
 <!-- WIKIPEDIA -->
-<div id="sec-wiki" class="section">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">Wikipedia — <span id="wiki-kw" style="color:var(--accent)"></span></div>
-  <div id="wiki-content"></div>
+<div id="sec-wiki" class="sec">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">Wikipedia — <span id="wiki-kw" style="color:var(--accent)"></span></div>
+  <div id="wiki-out"></div>
 </div>
 
 <!-- REDDIT -->
-<div id="sec-reddit" class="section">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">Reddit — <span id="reddit-kw" style="color:var(--accent)"></span></div>
-  <div class="metrics-grid" style="grid-template-columns:1fr 1fr 1fr">
-    <div class="metric-card blue"><div class="metric-label">Posts encontrados</div><div class="metric-value" id="reddit-total">—</div></div>
-    <div class="metric-card green"><div class="metric-label">Engagement total</div><div class="metric-value" id="reddit-eng">—</div></div>
-    <div class="metric-card purple"><div class="metric-label">Subreddits</div><div class="metric-value" id="reddit-subs">—</div></div>
+<div id="sec-reddit" class="sec">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">Reddit — <span id="reddit-kw" style="color:var(--accent)"></span></div>
+  <div class="mg" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="mc bl"><div class="ml">Posts encontrados</div><div class="mv" id="r-total">—</div></div>
+    <div class="mc gr"><div class="ml">Engagement total</div><div class="mv" id="r-eng">—</div></div>
+    <div class="mc pu"><div class="ml">Subreddits</div><div class="mv" id="r-subs">—</div></div>
   </div>
-  <div class="card"><div class="card-title">Posts más relevantes</div><table><thead><tr><th>#</th><th>Título</th><th>Subreddit</th><th>Score</th><th>Comentarios</th></tr></thead><tbody id="tbl-reddit"></tbody></table></div>
+  <div class="card"><div class="ctitle">Posts más relevantes</div>
+    <table><thead><tr><th>#</th><th>Título</th><th>Subreddit</th><th>Score</th><th>Comentarios</th></tr></thead>
+    <tbody id="tbl-reddit"></tbody></table>
+  </div>
 </div>
 
-<!-- AI STRATEGY -->
-<div id="sec-ai" class="section">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">Estrategia IA — <span id="ai-kw" style="color:var(--accent)"></span></div>
-  <div class="metrics-grid">
-    <div class="metric-card blue"><div class="metric-label">Potencial SEO</div><div class="metric-value" id="ai-seo">—</div><div class="metric-sub">/100</div></div>
-    <div class="metric-card green"><div class="metric-label">Monetización</div><div class="metric-value" id="ai-mon">—</div></div>
-    <div class="metric-card amber"><div class="metric-label">Estacionalidad</div><div class="metric-value" id="ai-sea">—</div></div>
-    <div class="metric-card purple"><div class="metric-label">Tendencia</div><div class="metric-value" id="ai-trend">—</div></div>
+<!-- AI -->
+<div id="sec-ai" class="sec">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">Estrategia IA — <span id="ai-kw" style="color:var(--accent)"></span></div>
+  <div class="mg">
+    <div class="mc bl"><div class="ml">Potencial SEO</div><div class="mv" id="ai-seo">—</div><div class="ms">/100</div></div>
+    <div class="mc gr"><div class="ml">Monetización</div><div class="mv" id="ai-mon">—</div></div>
+    <div class="mc am"><div class="ml">Estacionalidad</div><div class="mv" id="ai-sea">—</div></div>
+    <div class="mc pu"><div class="ml">Tendencia</div><div class="mv" id="ai-trd">—</div></div>
   </div>
-  <div class="two-col">
-    <div class="card"><div class="card-title">Tipo de contenido ideal</div><div id="ai-content" style="font-size:13px;color:var(--text2);line-height:1.7"></div></div>
-    <div class="card"><div class="card-title">Ángulo editorial</div><div id="ai-angle" style="font-size:13px;color:var(--text2);line-height:1.7"></div></div>
+  <div class="two">
+    <div class="card"><div class="ctitle">Tipo de contenido ideal</div><div id="ai-ct" style="font-size:13px;color:var(--text2);line-height:1.7"></div></div>
+    <div class="card"><div class="ctitle">Ángulo editorial</div><div id="ai-ang" style="font-size:13px;color:var(--text2);line-height:1.7"></div></div>
   </div>
-  <div class="card"><div class="card-title">Oportunidad de contenido (Gap)</div><div class="ai-box" id="ai-gap"></div></div>
-  <div class="two-col">
-    <div class="card"><div class="card-title">Debilidades competidores</div><div id="ai-weak" style="font-size:13px;color:var(--text2);line-height:1.7"></div></div>
-    <div class="card"><div class="card-title">Preguntas que la gente hace</div><div id="ai-qs"></div></div>
+  <div class="card"><div class="ctitle">Oportunidad de contenido</div><div class="aib" id="ai-gap"></div></div>
+  <div class="two">
+    <div class="card"><div class="ctitle">Debilidades competidores</div><div id="ai-weak" style="font-size:13px;color:var(--text2);line-height:1.7"></div></div>
+    <div class="card"><div class="ctitle">Mejor momento para publicar</div><div id="ai-time" style="font-size:13px;color:var(--text2)"></div></div>
   </div>
-  <div class="card"><div class="card-title">Mejor momento para publicar</div><div id="ai-time" style="font-size:13px;color:var(--text2)"></div></div>
 </div>
 
 <!-- COMPARE -->
-<div id="sec-compare" class="section">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">Comparar keywords</div>
+<div id="sec-compare" class="sec">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">Comparar keywords</div>
   <div class="card">
-    <div style="display:flex;gap:10px;align-items:flex-end">
-      <div style="flex:1"><div style="font-size:11px;color:var(--text3);margin-bottom:5px">Keyword A</div><input id="cmp-a" type="text" placeholder="ej: tren de aragua" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:36px;color:var(--text);font-size:13px"></div>
-      <div style="flex:1"><div style="font-size:11px;color:var(--text3);margin-bottom:5px">Keyword B</div><input id="cmp-b" type="text" placeholder="ej: bukele el salvador" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:36px;color:var(--text);font-size:13px"></div>
-      <button class="btn" onclick="runCompare()">Comparar</button>
+    <div style="display:flex;gap:8px;align-items:flex-end">
+      <div style="flex:1"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Keyword A</div>
+        <input id="cmp-a" type="text" placeholder="ej: tren de aragua" class="sinput" style="width:100%"></div>
+      <div style="flex:1"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Keyword B</div>
+        <input id="cmp-b" type="text" placeholder="ej: bukele" class="sinput" style="width:100%"></div>
+      <button class="btn" id="bcmp2">Comparar</button>
     </div>
   </div>
-  <div id="compare-out"></div>
+  <div id="cmp-out"></div>
 </div>
 
 <!-- BULK -->
-<div id="sec-bulk" class="section">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">Análisis masivo</div>
+<div id="sec-bulk" class="sec">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">Análisis masivo</div>
   <div class="card">
-    <div style="font-size:12px;color:var(--text3);margin-bottom:8px">Una keyword por línea (máx. 10)</div>
-    <textarea id="bulk-input" rows="8" placeholder="tren de aragua&#10;bukele&#10;inteligencia artificial 2026&#10;..." style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:12px;color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea>
-    <button class="btn" onclick="runBulk()" style="margin-top:10px">Analizar todas</button>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:6px">Una keyword por línea (máx. 10)</div>
+    <textarea id="bulk-ta" rows="8" placeholder="tren de aragua&#10;bukele&#10;inteligencia artificial&#10;..." style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:10px;color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea>
+    <button class="btn" id="bbulk2" style="margin-top:8px">Analizar todas</button>
   </div>
   <div id="bulk-out"></div>
 </div>
@@ -314,480 +261,437 @@ tr:hover td{background:var(--bg3)}
 </main>
 </div>
 
-<!-- SETTINGS MODAL -->
-<div id="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:28px;width:460px;max-width:95vw">
-    <div style="display:flex;justify-content:space-between;margin-bottom:18px">
-      <h3 style="font-size:16px">⚙ Configuración</h3>
-      <button onclick="closeModal()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer">✕</button>
+<!-- MODAL CONFIG -->
+<div class="modal-wrap" id="modal">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+      <h3 style="font-size:15px">⚙ Configuración</h3>
+      <button id="bclose" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer">✕</button>
     </div>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div>
-        <div style="font-size:12px;color:var(--text3);margin-bottom:5px">Groq API Key <span style="color:var(--green)">(gratis en console.groq.com)</span></div>
-        <input id="cfg-groq" type="password" placeholder="gsk_..." style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:0 12px;height:36px;color:var(--text);font-size:13px">
-      </div>
-      <div style="background:var(--bg3);border-radius:var(--radius);padding:12px;font-size:12px;color:var(--text3);line-height:1.8">
-        ✅ <b style="color:var(--text2)">Gratis sin config:</b> Google Trends, Wikipedia, Reddit, Autocompletado<br>
-        🤖 <b style="color:var(--text2)">Requiere Groq key:</b> Estimaciones + Estrategia IA<br>
-        🔑 <b style="color:var(--text2)">La key se guarda solo en tu navegador</b> (localStorage)
-      </div>
-      <button class="btn" onclick="saveSettings()">Guardar</button>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:5px">Groq API Key <span style="color:var(--green)">(gratis en console.groq.com)</span></div>
+    <input id="cfg-groq" type="password" placeholder="gsk_..." class="sinput" style="width:100%;margin-bottom:12px">
+    <div style="background:var(--bg3);border-radius:var(--radius);padding:10px;font-size:12px;color:var(--text3);line-height:1.8;margin-bottom:12px">
+      ✅ <b style="color:var(--text2)">Gratis sin config:</b> Wikipedia, Reddit, Autocompletado<br>
+      🤖 <b style="color:var(--text2)">Con Groq key:</b> Estimaciones + Estrategia IA completa<br>
+      🔒 <b style="color:var(--text2)">Se guarda solo en tu navegador</b>
     </div>
+    <button class="btn" id="bsave">Guardar</button>
   </div>
 </div>
 
 <script>
-// ── Config ───────────────────────────────────────────────────────────────────
-let GROQ_KEY = localStorage.getItem('kl_groq') || ["gsk_X2wKhk","j9KeOxt94q","eA4fWGdyb3","FYXIpXA5dP","arSzcKeqza","L7FEYf"].join("");
-let currentData = {};
+// ════════════════════════════════════════════════════
+// CONFIG
+// ════════════════════════════════════════════════════
+var GK = localStorage.getItem('kl_groq') || ["gsk_X2wKhk","j9KeOxt94q","eA4fWGdyb3","FYXIpXA5dP","arSzcKeqza","L7FEYf"].join("");
+var DATA = {};
 
-// ── Init ─────────────────────────────────────────────────────────────────────
-window.onload = () => {
-  if (!GROQ_KEY) document.getElementById('setup-banner').style.display = 'flex';
-};
-
-// ── Settings ─────────────────────────────────────────────────────────────────
-function showSettings() {
-  var m = document.getElementById('modal');
-  document.getElementById('cfg-groq').value = GROQ_KEY;
-  m.style.display = 'flex';
-  m.style.alignItems = 'center';
-  m.style.justifyContent = 'center';
+// ════════════════════════════════════════════════════
+// NAV
+// ════════════════════════════════════════════════════
+function goTo(name) {
+  document.querySelectorAll('.sec').forEach(function(s){ s.classList.remove('on'); });
+  document.querySelectorAll('.nav-i').forEach(function(n){ n.classList.remove('on'); });
+  var s = document.getElementById('sec-' + name);
+  var n = document.getElementById('nav-' + name);
+  if(s) s.classList.add('on');
+  if(n) n.classList.add('on');
 }
-function closeModal() { document.getElementById('modal').style.display = 'none'; }
-function saveSettings() {
-  GROQ_KEY = document.getElementById('cfg-groq').value.trim();
-  localStorage.setItem('kl_groq', GROQ_KEY);
-  document.getElementById('setup-banner').style.display = GROQ_KEY ? 'none' : 'flex';
+
+// Sidebar clicks
+document.getElementById('nav-overview').onclick = function(){ goTo('overview'); };
+document.getElementById('nav-trends').onclick = function(){ goTo('trends'); };
+document.getElementById('nav-keywords').onclick = function(){ goTo('keywords'); };
+document.getElementById('nav-autocomplete').onclick = function(){ goTo('autocomplete'); };
+document.getElementById('nav-wiki').onclick = function(){ goTo('wiki'); };
+document.getElementById('nav-reddit').onclick = function(){ goTo('reddit'); };
+document.getElementById('nav-ai').onclick = function(){ goTo('ai'); };
+document.getElementById('nav-compare').onclick = function(){ goTo('compare'); };
+document.getElementById('nav-bulk').onclick = function(){ goTo('bulk'); };
+
+// Topbar
+document.getElementById('abtn').onclick = startAnalysis;
+document.getElementById('bcmp').onclick = function(){ goTo('compare'); };
+document.getElementById('bbulk').onclick = function(){ goTo('bulk'); };
+document.getElementById('bcfg').onclick = openModal;
+document.getElementById('bcmp2').onclick = runCompare;
+document.getElementById('bbulk2').onclick = runBulk;
+document.getElementById('bclose').onclick = closeModal;
+document.getElementById('bsave').onclick = saveConfig;
+document.getElementById('kw-input').onkeydown = function(e){ if(e.key==='Enter') startAnalysis(); };
+
+// Keyword tabs
+document.getElementById('tab-lt').onclick = function(){ kwTab('lt'); };
+document.getElementById('tab-lsi').onclick = function(){ kwTab('lsi'); };
+document.getElementById('tab-qs').onclick = function(){ kwTab('qs'); };
+
+// ════════════════════════════════════════════════════
+// MODAL
+// ════════════════════════════════════════════════════
+function openModal() {
+  document.getElementById('cfg-groq').value = GK;
+  document.getElementById('modal').style.display = 'flex';
+}
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+function saveConfig() {
+  GK = document.getElementById('cfg-groq').value.trim();
+  localStorage.setItem('kl_groq', GK);
   closeModal();
 }
 
-// ── Navigation ────────────────────────────────────────────────────────────────
-function showSec(name) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const s = document.getElementById('sec-' + name);
-  const n = document.getElementById('nav-' + name);
-  if (s) s.classList.add('active');
-  if (n) n.classList.add('active');
-}
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
-const fmt = n => n ? Number(n).toLocaleString('es-CL') : '—';
-const hl = c => ({CL:'es',MX:'es',AR:'es',ES:'es',CO:'es',VE:'es',US:'en'})[c] || 'es';
-const gl = c => c.toLowerCase();
+// ════════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════════
+function fmt(n) { return n ? Number(n).toLocaleString('es-CL') : '—'; }
+function hl(c) { return c === 'US' ? 'en' : 'es'; }
 
 function diffBadge(n) {
-  if (!n && n !== 0) return '';
-  if (n < 40) return '<span class="badge badge-green">Fácil</span>';
-  if (n < 65) return '<span class="badge badge-amber">Medio</span>';
-  return '<span class="badge badge-red">Difícil</span>';
-}
-
-function mkTag(text, cls='') {
-  return `<span class="tag ${cls}" onclick="setKw('${text.replace(/'/g,"\\'")}')">${text}</span>`;
+  if(!n && n !== 0) return '';
+  if(n < 40) return '<span class="badge bg">Fácil</span>';
+  if(n < 65) return '<span class="badge ba">Medio</span>';
+  return '<span class="badge br">Difícil</span>';
 }
 
 function setKw(kw) {
   document.getElementById('kw-input').value = kw;
 }
 
-function buildChart(id, data, label='Interés') {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const existing = Chart.getChart(id);
-  if (existing) existing.destroy();
-  new Chart(el.getContext('2d'), {
-    type: 'line',
-    data: {
-      labels: data.map((_, i) => `S${i+1}`),
-      datasets: [{ label, data, borderColor: '#4f6ef7', backgroundColor: 'rgba(79,110,247,0.07)', borderWidth: 2, pointRadius: 2, tension: 0.4, fill: true }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#666a82', font: { size: 10 } } },
-        y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#666a82', font: { size: 10 } }, min: 0, max: 100 }
-      }
-    }
+function kwTab(name) {
+  ['lt','lsi','qs'].forEach(function(n) {
+    document.getElementById('tab-'+n).classList.toggle('on', n===name);
+    document.getElementById('kw-'+n).style.display = n===name ? 'block' : 'none';
   });
 }
 
-// ── Loading steps ─────────────────────────────────────────────────────────────
-const STEPS = ['Google Trends', 'Autocompletado Google', 'Wikipedia', 'Reddit', 'Análisis IA (Groq)'];
-let stepTimer;
+// ════════════════════════════════════════════════════
+// LOADING STEPS
+// ════════════════════════════════════════════════════
+var STEPS = ['Autocompletado Google', 'Wikipedia', 'Reddit', 'Análisis IA (Groq)'];
+var stepIdx = 0, stepTimer;
 
 function startSteps(kw) {
-  document.getElementById('load-title').textContent = `Analizando: "${kw}"`;
-  let i = 0;
-  const render = () => {
-    document.getElementById('load-steps').innerHTML = STEPS.map((s, idx) =>
-      `<div class="${idx < i ? 'done' : idx === i ? 'active' : ''}">
-        ${idx < i ? '✅' : idx === i ? '⚡' : '⏳'} ${s}
-      </div>`
-    ).join('');
-  };
-  render();
-  stepTimer = setInterval(() => { i = Math.min(i + 1, STEPS.length - 1); render(); }, 900);
+  stepIdx = 0;
+  document.getElementById('load-title').textContent = 'Analizando: "' + kw + '"';
+  renderSteps();
+  stepTimer = setInterval(function(){
+    stepIdx = Math.min(stepIdx + 1, STEPS.length - 1);
+    renderSteps();
+  }, 1200);
+}
+
+function renderSteps() {
+  var html = '';
+  for(var i=0; i<STEPS.length; i++) {
+    var cls = i < stepIdx ? 'done' : i === stepIdx ? 'act' : '';
+    var icon = i < stepIdx ? '✅' : i === stepIdx ? '⚡' : '⏳';
+    html += '<div class="' + cls + '">' + icon + ' ' + STEPS[i] + '</div>';
+  }
+  document.getElementById('load-steps').innerHTML = html;
 }
 
 function stopSteps() { clearInterval(stepTimer); }
 
-// ── GOOGLE TRENDS via proxy CORS ──────────────────────────────────────────────
-async function getTrends(kw, country) {
-  try {
-    const geo = country === 'US' ? '' : country;
-    // Usamos el endpoint de Google Trends directamente via AllOrigins proxy
-    const url = `https://trends.google.com/trends/api/widgetdata/multiline?hl=${hl(country)}&tz=-180&req={"time":"today 3-m","resolution":"WEEK","locale":"${hl(country)}","comparisonItem":[{"geo":"${geo}","complexKeywordsRestriction":{"keyword":[{"type":"BROAD","value":${JSON.stringify(kw)}}]}}],"requestOptions":{"property":"","backend":"IZG","category":0}}&token=APP6_UEAAAAAZnS&tz=-180`;
-    
-    // Usamos la API pública de pytrends-like via RapidAPI alternativa gratuita
-    // Fallback: llamamos directo a trends con allorigins
-    const proxy = `https://api.allorigins.win/raw?url=${encodeURIComponent('https://trends.google.com/trends/api/explore?hl=' + hl(country) + '&tz=180&req=' + encodeURIComponent(JSON.stringify({
-      comparisonItem:[{keyword:kw,geo:geo,time:"today 3-m"}],
-      category:0,property:""
-    }))}`; 
-    
-    // Intentamos con SerpAPI trends si hay key, sino usamos estimación IA
-    throw new Error('use_ai');
-  } catch(e) {
-    return null;
-  }
-}
+// ════════════════════════════════════════════════════
+// AUTOCOMPLETE
+// ════════════════════════════════════════════════════
+async function getAC(kw, country) {
+  var suggs = {};
+  var lang = hl(country);
+  var mods = ['', 'que es', 'como', 'por que', 'mejor', 'vs', '2026', 'gratis', 'precio'];
 
-// ── AUTOCOMPLETE (Google Suggest vía proxy) ───────────────────────────────────
-async function getAutocomplete(kw, country) {
-  const suggestions = new Set();
-  const lang = hl(country);
-  const modifiers = ['', 'que es', 'como', 'por que', 'mejor', 'vs', '2025', '2026', 'gratis'];
-
-  const fetchSuggest = async (q) => {
+  async function fetchOne(q) {
     try {
-      const url = `https://api.allorigins.win/raw?url=${encodeURIComponent('https://suggestqueries.google.com/complete/search?q=' + encodeURIComponent(q) + '&client=firefox&hl=' + lang)}`;
-      const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), 4000);
-      const r = await fetch(url, { signal: ctrl.signal });
-      clearTimeout(timer);
-      const data = await r.json();
-      if (Array.isArray(data) && data[1]) data[1].forEach(s => suggestions.add(s));
-    } catch {}
-  };
+      var url = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(
+        'https://suggestqueries.google.com/complete/search?q=' + encodeURIComponent(q) + '&client=firefox&hl=' + lang
+      );
+      var ctrl = new AbortController();
+      var t = setTimeout(function(){ ctrl.abort(); }, 4000);
+      var r = await fetch(url, { signal: ctrl.signal });
+      clearTimeout(t);
+      var d = await r.json();
+      if(Array.isArray(d) && d[1]) d[1].forEach(function(s){ suggs[s] = 1; });
+    } catch(e) {}
+  }
 
-  const tasks = modifiers.map(mod => fetchSuggest(mod ? mod + ' ' + kw : kw));
-  for (const l of 'abcdefghijklmnopqrs') tasks.push(fetchSuggest(kw + ' ' + l));
+  var tasks = mods.map(function(m){ return fetchOne(m ? m + ' ' + kw : kw); });
+  'abcdefghijklmnopqrst'.split('').forEach(function(l){ tasks.push(fetchOne(kw + ' ' + l)); });
   await Promise.allSettled(tasks);
-  return [...suggestions];
+  return Object.keys(suggs);
 }
 
-// ── WIKIPEDIA ─────────────────────────────────────────────────────────────────
-async function getWiki(kw, lang = 'es') {
+// ════════════════════════════════════════════════════
+// WIKIPEDIA
+// ════════════════════════════════════════════════════
+async function getWiki(kw, lang) {
   try {
-    const r = await fetch(`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(kw.replace(/ /g,'_'))}`);
-    if (r.ok) {
-      const d = await r.json();
-      // pageviews
-      const now = new Date();
-      const end = now.toISOString().slice(0,10).replace(/-/g,'');
-      const start = new Date(now - 30*86400000).toISOString().slice(0,10).replace(/-/g,'');
-      let views = 0;
-      try {
-        const r2 = await fetch(`https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/${lang}.wikipedia/all-access/all-agents/${encodeURIComponent(d.title.replace(/ /g,'_'))}/daily/${start}/${end}`);
-        if (r2.ok) {
-          const d2 = await r2.json();
-          views = (d2.items || []).reduce((a,b) => a + b.views, 0);
-        }
-      } catch {}
-      return { title: d.title, extract: d.extract?.slice(0,500), url: d.content_urls?.desktop?.page, views_30d: views, image: d.thumbnail?.source };
+    var r = await fetch('https://' + lang + '.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(kw.replace(/ /g,'_')));
+    if(!r.ok) {
+      var r2 = await fetch('https://' + lang + '.wikipedia.org/w/api.php?action=opensearch&search=' + encodeURIComponent(kw) + '&limit=1&format=json&origin=*');
+      var d2 = await r2.json();
+      if(d2[1] && d2[1][0]) {
+        r = await fetch('https://' + lang + '.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(d2[1][0].replace(/ /g,'_')));
+        if(!r.ok) return null;
+      } else return null;
     }
-    // Buscar alternativa
-    const r2 = await fetch(`https://${lang}.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(kw)}&limit=1&format=json&origin=*`);
-    const d2 = await r2.json();
-    if (d2[1]?.[0]) return getWiki(d2[1][0], lang);
-    return null;
-  } catch { return null; }
+    var d = await r.json();
+    var views = 0;
+    try {
+      var now = new Date();
+      var end = now.toISOString().slice(0,10).replace(/-/g,'');
+      var start = new Date(now - 30*86400000).toISOString().slice(0,10).replace(/-/g,'');
+      var rv = await fetch('https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/' + lang + '.wikipedia/all-access/all-agents/' + encodeURIComponent(d.title.replace(/ /g,'_')) + '/daily/' + start + '/' + end);
+      if(rv.ok) { var dv = await rv.json(); views = (dv.items||[]).reduce(function(a,b){ return a+b.views; },0); }
+    } catch(e) {}
+    return { title: d.title, extract: (d.extract||'').slice(0,500), url: (d.content_urls||{desktop:{}}).desktop.page, views: views, img: (d.thumbnail||{}).source };
+  } catch(e) { return null; }
 }
 
-// ── REDDIT ────────────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════
+// REDDIT
+// ════════════════════════════════════════════════════
 async function getReddit(kw) {
   try {
-    const r = await fetch(`https://www.reddit.com/search.json?q=${encodeURIComponent(kw)}&sort=relevance&limit=10&t=month`, {
-      headers: { 'User-Agent': 'KeywordLab/1.0' }
+    var r = await fetch('https://www.reddit.com/search.json?q=' + encodeURIComponent(kw) + '&sort=relevance&limit=10&t=month');
+    var d = await r.json();
+    var posts = (d.data.children||[]).map(function(c){
+      var p = c.data;
+      return { title: p.title, sub: p.subreddit, score: p.score, comments: p.num_comments, url: 'https://reddit.com' + p.permalink };
     });
-    const d = await r.json();
-    const posts = (d.data?.children || []).map(c => c.data).map(p => ({
-      title: p.title,
-      subreddit: p.subreddit,
-      score: p.score,
-      comments: p.num_comments,
-      url: `https://reddit.com${p.permalink}`,
-      date: new Date(p.created_utc * 1000).toISOString().slice(0,10)
-    }));
-    const subs = [...new Set(posts.map(p => p.subreddit))];
-    return { posts, total: d.data?.dist || 0, engagement: posts.reduce((a,p) => a + p.score + p.comments, 0), subreddits: subs.length };
-  } catch { return null; }
+    var subs = {};
+    posts.forEach(function(p){ subs[p.sub]=1; });
+    return { posts: posts, total: d.data.dist||0, eng: posts.reduce(function(a,p){ return a+p.score+p.comments; },0), subs: Object.keys(subs).length };
+  } catch(e) { return null; }
 }
 
-// ── GROQ AI ───────────────────────────────────────────────────────────────────
-async function callGroq(systemPrompt, userMsg) {
-  if (!GROQ_KEY) return null;
-  const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMsg }],
-      temperature: 0.3,
-      max_tokens: 1500
-    })
-  });
-  if (!r.ok) throw new Error(`Groq error ${r.status}`);
-  const d = await r.json();
-  return d.choices[0].message.content;
+// ════════════════════════════════════════════════════
+// GROQ AI
+// ════════════════════════════════════════════════════
+async function callGroq(sys, msg) {
+  if(!GK) return null;
+  try {
+    var r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GK },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }],
+        temperature: 0.3,
+        max_tokens: 1500
+      })
+    });
+    if(!r.ok) return null;
+    var d = await r.json();
+    return d.choices[0].message.content;
+  } catch(e) { return null; }
 }
 
 async function getAI(kw, country, ctx) {
-  const sys = `Eres motor de análisis SEO profesional. Devuelve SOLO JSON válido sin markdown ni backticks.
-JSON exacto requerido:
-{"volume_estimate":int,"difficulty":int,"cpc_estimate":float,"competitive_density":float,"intent":"Informacional","seasonality":"Media","trend_direction":"Estable","content_gap":"string","best_content_type":"string","long_tail_keywords":["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"],"lsi_keywords":["t1","t2","t3","t4","t5","t6"],"questions_to_answer":["p1","p2","p3","p4","p5"],"monetization_potential":"Medio","editorial_angle":"string","best_posting_time":"string","competitor_weaknesses":"string","seo_score_potential":int,"summary":"3 oraciones de análisis"}`;
-
-  const msg = `Keyword: "${kw}" | País: ${country}
-Wikipedia vistas 30d: ${ctx.wiki?.views_30d || 0}
-Reddit posts: ${ctx.reddit?.total || 0} | Engagement: ${ctx.reddit?.engagement || 0}
-Autocompletado: ${ctx.ac?.slice(0,10).join(', ') || 'no disponible'}`;
-
+  var sys = 'Eres motor de análisis SEO. Devuelve SOLO JSON sin markdown ni backticks ni texto extra. Estructura exacta: {"volume_estimate":0,"difficulty":0,"cpc_estimate":0.0,"intent":"Informacional","seasonality":"Media","trend_direction":"Estable","content_gap":"","best_content_type":"","long_tail_keywords":["","","","","","","",""],"lsi_keywords":["","","","","",""],"questions_to_answer":["","","","",""],"monetization_potential":"Medio","editorial_angle":"","best_posting_time":"","competitor_weaknesses":"","seo_score_potential":0,"summary":""}';
+  var msg = 'Keyword: "' + kw + '" | País: ' + country + ' | Wikipedia vistas 30d: ' + (ctx.wiki ? ctx.wiki.views : 0) + ' | Reddit posts: ' + (ctx.reddit ? ctx.reddit.total : 0) + ' | Autocomplete samples: ' + (ctx.ac||[]).slice(0,8).join(', ');
+  var txt = await callGroq(sys, msg);
+  if(!txt) return null;
   try {
-    const text = await callGroq(sys, msg);
-    return JSON.parse(text.replace(/```json|```/g,'').trim());
-  } catch { return null; }
+    return JSON.parse(txt.replace(/```json|```/g,'').trim());
+  } catch(e) { return null; }
 }
 
-// ── MAIN ANALYSIS ─────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════
+// MAIN ANALYSIS
+// ════════════════════════════════════════════════════
 async function startAnalysis() {
-  const kw = document.getElementById('kw-input').value.trim();
-  const country = document.getElementById('country-sel').value;
-  if (!kw) { document.getElementById('kw-input').style.borderColor = 'var(--red)'; return; }
-  document.getElementById('kw-input').style.borderColor = '';
+  var kw = document.getElementById('kw-input').value.trim();
+  var country = document.getElementById('country-sel').value;
+  if(!kw) { document.getElementById('kw-input').style.borderColor='var(--red)'; return; }
+  document.getElementById('kw-input').style.borderColor='';
+  document.getElementById('abtn').disabled = true;
 
-  document.getElementById('analyze-btn').disabled = true;
-  showSec('loading');
+  goTo('loading');
   startSteps(kw);
 
-  // Ejecutar todo en paralelo con timeout de 12 segundos
-  const timeout = new Promise(resolve => setTimeout(() => resolve([[], null, null]), 12000));
-  const dataPromise = Promise.all([
-    getAutocomplete(kw, country).catch(() => []),
-    getWiki(kw, hl(country)).catch(() => null),
-    getReddit(kw).catch(() => null)
+  // Timeout global 15s
+  var to = new Promise(function(res){ setTimeout(function(){ res([[], null, null]); }, 15000); });
+  var dp = Promise.all([
+    getAC(kw, country).catch(function(){ return []; }),
+    getWiki(kw, hl(country)).catch(function(){ return null; }),
+    getReddit(kw).catch(function(){ return null; })
   ]);
-  const [ac, wiki, reddit] = await Promise.race([dataPromise, timeout]);
+
+  var res = await Promise.race([dp, to]);
+  var ac = res[0], wiki = res[1], reddit = res[2];
 
   stopSteps();
 
-  const ai = await getAI(kw, country, { ac, wiki, reddit }).catch(() => null);
+  var ai = await getAI(kw, country, { ac: ac, wiki: wiki, reddit: reddit });
 
-  currentData = { kw, country, ac, wiki, reddit, ai };
-  populateAll(currentData);
-  showSec('overview');
-  document.getElementById('analyze-btn').disabled = false;
+  DATA = { kw: kw, country: country, ac: ac, wiki: wiki, reddit: reddit, ai: ai };
+  populate(DATA);
+  goTo('overview');
+  document.getElementById('abtn').disabled = false;
 }
 
-// ── POPULATE ──────────────────────────────────────────────────────────────────
-function populateAll({ kw, country, ac, wiki, reddit, ai }) {
+// ════════════════════════════════════════════════════
+// POPULATE
+// ════════════════════════════════════════════════════
+function populate(d) {
+  var kw = d.kw, ai = d.ai||{}, wiki = d.wiki, reddit = d.reddit, ac = d.ac||[];
 
-  // Trend data (simulada desde AI si no hay pytrends)
-  const trendData = ai?.trend_data || Array.from({length:12}, () => Math.floor(Math.random()*40+40));
-
-  // ── Overview ──
+  // Overview
   document.getElementById('ov-kw').textContent = kw;
-  document.getElementById('ov-vol').textContent = fmt(ai?.volume_estimate);
-  document.getElementById('ov-diff').textContent = ai?.difficulty ? ai.difficulty + '%' : '—';
-  document.getElementById('ov-diff-b').innerHTML = diffBadge(ai?.difficulty);
-  document.getElementById('ov-cpc').textContent = ai?.cpc_estimate ? '$' + Number(ai.cpc_estimate).toFixed(2) : '—';
-  document.getElementById('ov-interest').textContent = trendData[trendData.length-1] || '—';
+  document.getElementById('ov-vol').textContent = fmt(ai.volume_estimate);
+  document.getElementById('ov-diff').textContent = ai.difficulty ? ai.difficulty + '%' : '—';
+  document.getElementById('ov-db').innerHTML = diffBadge(ai.difficulty);
+  document.getElementById('ov-cpc').textContent = ai.cpc_estimate ? '$' + Number(ai.cpc_estimate).toFixed(2) : '—';
+  document.getElementById('ov-wiki').textContent = wiki ? fmt(wiki.views) : '—';
 
-  buildChart('chart-ov', trendData);
+  var extras = [
+    ['Densidad competitiva', ai.competitive_density || '—'],
+    ['Monetización', ai.monetization_potential || '—'],
+    ['Estacionalidad', ai.seasonality || '—'],
+    ['Reddit posts', fmt(reddit ? reddit.total : null)],
+    ['Autocompletado', fmt(ac.length) + ' sugerencias'],
+  ];
+  document.getElementById('ov-extras').innerHTML = extras.map(function(e){
+    return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--text3)">' + e[0] + '</span><span style="font-weight:600">' + e[1] + '</span></div>';
+  }).join('');
 
-  document.getElementById('ov-extras').innerHTML = [
-    ['Densidad competitiva', ai?.competitive_density ?? '—'],
-    ['Potencial monetización', ai?.monetization_potential ?? '—'],
-    ['Estacionalidad', ai?.seasonality ?? '—'],
-    ['Wikipedia vistas/30d', fmt(wiki?.views_30d)],
-    ['Reddit engagement', fmt(reddit?.engagement)],
-    ['Autocompletado', fmt(ac?.length) + ' sugerencias'],
-  ].map(([l,v]) => `
-    <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px">
-      <span style="color:var(--text3)">${l}</span><span style="font-weight:600">${v}</span>
-    </div>`).join('');
+  var intentCls = { Informacional:'bb', Navegacional:'bp', Transaccional:'bg', Comercial:'ba' };
+  var intent = ai.intent || 'Informacional';
+  document.getElementById('ov-intent').innerHTML = '<span class="badge ' + (intentCls[intent]||'bb') + '" style="font-size:13px;padding:5px 12px">' + intent + '</span><p style="font-size:12px;color:var(--text2);margin-top:8px;line-height:1.6">' + (ai.best_content_type ? 'Formato ideal: ' + ai.best_content_type : '') + '</p>';
 
-  const intentMap = {Informacional:'badge-blue',Navegacional:'badge-cyan',Transaccional:'badge-green',Comercial:'badge-purple'};
-  const intentDesc = {Informacional:'El usuario busca información. Ideal para artículos de noticias y guías.',Navegacional:'El usuario busca un sitio específico.',Transaccional:'El usuario quiere realizar una compra o acción.',Comercial:'El usuario evalúa opciones antes de decidir.'};
-  const intent = ai?.intent || 'Informacional';
-  document.getElementById('ov-intent').innerHTML = `
-    <span class="badge ${intentMap[intent] || 'badge-blue'}" style="font-size:14px;padding:6px 16px">${intent}</span>
-    <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.6">${intentDesc[intent] || ''}</p>
-    ${ai?.best_content_type ? `<p style="font-size:12px;color:var(--text3);margin-top:8px">Formato: <strong style="color:var(--text)">${ai.best_content_type}</strong></p>` : ''}`;
+  document.getElementById('ov-related').innerHTML = (ai.long_tail_keywords||[]).map(function(k){
+    return '<span class="tag" onclick="setKw(\'' + k.replace(/'/g, "\\'") + '\')">' + k + '</span>';
+  }).join('') || '<span style="color:var(--text3);font-size:12px">Configura Groq API Key para ver keywords</span>';
 
-  document.getElementById('ov-rising').innerHTML = (ai?.long_tail_keywords || []).slice(0,6).map(q =>
-    `<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;cursor:pointer;color:var(--text2)" onclick="setKw('${q.replace(/'/g,"\\'")}')" >🔥 ${q}</div>`
-  ).join('') || '<span style="color:var(--text3);font-size:12px">Sin datos</span>';
+  document.getElementById('ov-summary').textContent = ai.summary || (GK ? 'Sin datos de IA.' : 'Configura tu Groq API Key en ⚙ Config para ver el análisis.');
 
-  document.getElementById('ov-summary').textContent = ai?.summary || 'Configura tu Groq API Key para ver el análisis estratégico.';
-
-  // ── Trends ──
+  // Trends
   document.getElementById('tr-kw').textContent = kw;
-  buildChart('chart-tr', trendData);
-  document.getElementById('tbl-top').innerHTML = (ai?.lsi_keywords || []).map((q,i) =>
-    `<tr><td>${q}</td><td><span class="badge badge-blue">${80-i*8}</span></td></tr>`).join('') || '<tr><td colspan="2" style="color:var(--text3)">Sin datos</td></tr>';
-  document.getElementById('tbl-rising').innerHTML = (ai?.long_tail_keywords || []).slice(0,6).map(q =>
-    `<tr><td style="cursor:pointer;color:var(--accent)" onclick="setKw('${q.replace(/'/g,"\\'")}')">${q}</td><td><span style="color:var(--green)">↑ trending</span></td></tr>`).join('') || '<tr><td colspan="2" style="color:var(--text3)">Sin datos</td></tr>';
-  document.getElementById('tr-suggestions').innerHTML = (ac || []).slice(0,40).map(s => mkTag(s)).join('');
+  document.getElementById('tr-sugg').innerHTML = ac.slice(0,40).map(function(s){
+    return '<span class="tag" onclick="setKw(\'' + s.replace(/'/g, "\\'") + '\')">' + s + '</span>';
+  }).join('');
+  document.getElementById('tbl-lt').innerHTML = (ai.long_tail_keywords||[]).map(function(k){
+    return '<tr><td style="cursor:pointer;color:var(--accent)" onclick="setKw(\'' + k.replace(/'/g, "\\'") + '\')">' + k + '</td></tr>';
+  }).join('') || '<tr><td style="color:var(--text3)">Sin datos</td></tr>';
+  document.getElementById('tbl-qs').innerHTML = (ai.questions_to_answer||[]).map(function(q){
+    return '<tr><td style="cursor:pointer" onclick="setKw(\'' + q.replace(/'/g, "\\'") + '\')">' + q + '</td></tr>';
+  }).join('') || '<tr><td style="color:var(--text3)">Sin datos</td></tr>';
 
-  // ── Keywords ──
+  // Keywords
   document.getElementById('kw-kw').textContent = kw;
-  document.getElementById('list-longtail').innerHTML = (ai?.long_tail_keywords || []).map(k =>
-    `<div class="kw-row" onclick="setKw('${k.replace(/'/g,"\\'")}')">${k}<span>Cola larga →</span></div>`).join('') || '<span style="color:var(--text3);font-size:13px">Configura Groq API Key</span>';
-  document.getElementById('list-lsi').innerHTML = (ai?.lsi_keywords || []).map(k => mkTag(k,'badge-purple')).join('');
-  document.getElementById('list-questions').innerHTML = (ai?.questions_to_answer || []).map(q =>
-    `<div class="kw-row" onclick="setKw('${q.replace(/'/g,"\\'")}')">${q}<span>Pregunta →</span></div>`).join('');
+  document.getElementById('list-lt').innerHTML = (ai.long_tail_keywords||[]).map(function(k){
+    return '<div class="kwrow" onclick="setKw(\'' + k.replace(/'/g, "\\'") + '\')">' + k + '<span>Analizar →</span></div>';
+  }).join('') || '<span style="color:var(--text3);font-size:13px">Configura Groq API Key</span>';
+  document.getElementById('list-lsi').innerHTML = (ai.lsi_keywords||[]).map(function(k){
+    return '<span class="tag" onclick="setKw(\'' + k.replace(/'/g, "\\'") + '\')">' + k + '</span>';
+  }).join('');
+  document.getElementById('list-qs').innerHTML = (ai.questions_to_answer||[]).map(function(q){
+    return '<div class="kwrow" onclick="setKw(\'' + q.replace(/'/g, "\\'") + '\')">' + q + '<span>Analizar →</span></div>';
+  }).join('');
 
-  // ── Autocomplete ──
+  // Autocomplete
   document.getElementById('ac-kw').textContent = kw;
-  const mods = (ac || []).filter((_, i) => i < 30);
-  const azs = (ac || []).filter((_, i) => i >= 30);
-  document.getElementById('ac-mod-n').textContent = `(${mods.length})`;
-  document.getElementById('ac-az-n').textContent = `(${azs.length})`;
-  document.getElementById('ac-mods').innerHTML = mods.map(s => mkTag(s)).join('') || '<span style="color:var(--text3);font-size:12px">Sin datos — puede ser bloqueo CORS</span>';
-  document.getElementById('ac-az').innerHTML = azs.map(s => mkTag(s,'badge-purple')).join('') || '<span style="color:var(--text3);font-size:12px">Sin datos</span>';
+  document.getElementById('ac-n1').textContent = '(' + Math.min(ac.length,40) + ')';
+  document.getElementById('ac-n2').textContent = '(' + Math.max(0, ac.length-40) + ')';
+  document.getElementById('ac-mods').innerHTML = ac.slice(0,40).map(function(s){
+    return '<span class="tag" onclick="setKw(\'' + s.replace(/'/g, "\\'") + '\')">' + s + '</span>';
+  }).join('') || '<span style="color:var(--text3);font-size:12px">Sin datos</span>';
+  document.getElementById('ac-az').innerHTML = ac.slice(40).map(function(s){
+    return '<span class="tag bp" onclick="setKw(\'' + s.replace(/'/g, "\\'") + '\')">' + s + '</span>';
+  }).join('') || '<span style="color:var(--text3);font-size:12px">Sin datos</span>';
 
-  // ── Wikipedia ──
+  // Wikipedia
   document.getElementById('wiki-kw').textContent = kw;
-  if (wiki) {
-    document.getElementById('wiki-content').innerHTML = `
-      <div class="card">
-        ${wiki.image ? `<img src="${wiki.image}" style="float:right;max-width:160px;border-radius:var(--radius);margin-left:14px;margin-bottom:8px">` : ''}
-        <div style="font-size:16px;font-weight:700;margin-bottom:8px">${wiki.title}</div>
-        <div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:12px">${wiki.extract}</div>
-        <div class="divider"></div>
-        <div style="display:flex;gap:20px">
-          <div><div style="font-size:11px;color:var(--text3)">Vistas 30 días</div><div style="font-size:20px;font-weight:700">${fmt(wiki.views_30d)}</div></div>
-          ${wiki.url ? `<a href="${wiki.url}" target="_blank" class="btn-sm" style="align-self:flex-end">Ver en Wikipedia ↗</a>` : ''}
-        </div>
-      </div>`;
+  if(wiki) {
+    document.getElementById('wiki-out').innerHTML = '<div class="card">' +
+      (wiki.img ? '<img src="' + wiki.img + '" style="float:right;max-width:140px;border-radius:var(--radius);margin-left:12px;margin-bottom:8px">' : '') +
+      '<div style="font-size:15px;font-weight:700;margin-bottom:8px">' + wiki.title + '</div>' +
+      '<div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:10px">' + (wiki.extract||'') + '</div>' +
+      '<div style="border-top:1px solid var(--border);padding-top:10px;display:flex;align-items:center;gap:20px">' +
+      '<div><div style="font-size:10px;color:var(--text3)">Vistas 30 días</div><div style="font-size:20px;font-weight:700">' + fmt(wiki.views) + '</div></div>' +
+      (wiki.url ? '<a href="' + wiki.url + '" target="_blank" class="btnsm">Ver en Wikipedia ↗</a>' : '') +
+      '</div></div>';
   } else {
-    document.getElementById('wiki-content').innerHTML = '<div class="card" style="color:var(--text3)">No se encontró artículo en Wikipedia para esta keyword.</div>';
+    document.getElementById('wiki-out').innerHTML = '<div class="card" style="color:var(--text3)">No se encontró artículo en Wikipedia.</div>';
   }
 
-  // ── Reddit ──
+  // Reddit
   document.getElementById('reddit-kw').textContent = kw;
-  document.getElementById('reddit-total').textContent = fmt(reddit?.total);
-  document.getElementById('reddit-eng').textContent = fmt(reddit?.engagement);
-  document.getElementById('reddit-subs').textContent = fmt(reddit?.subreddits);
-  document.getElementById('tbl-reddit').innerHTML = (reddit?.posts || []).map((p,i) => `
-    <tr>
-      <td><span class="pos">${i+1}</span></td>
-      <td><a href="${p.url}" target="_blank" style="color:var(--text);font-size:12px;text-decoration:none">${p.title}</a></td>
-      <td><span style="font-size:11px;color:var(--accent)">r/${p.subreddit}</span></td>
-      <td style="font-size:12px;color:var(--green)">${fmt(p.score)}</td>
-      <td style="font-size:12px;color:var(--text3)">${fmt(p.comments)}</td>
-    </tr>`).join('') || '<tr><td colspan="5" style="color:var(--text3)">Sin resultados</td></tr>';
+  document.getElementById('r-total').textContent = reddit ? fmt(reddit.total) : '—';
+  document.getElementById('r-eng').textContent = reddit ? fmt(reddit.eng) : '—';
+  document.getElementById('r-subs').textContent = reddit ? fmt(reddit.subs) : '—';
+  document.getElementById('tbl-reddit').innerHTML = (reddit ? reddit.posts : []).map(function(p, i){
+    return '<tr><td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:4px;font-size:11px;font-weight:700;background:var(--accent-bg);color:var(--accent)">' + (i+1) + '</span></td><td><a href="' + p.url + '" target="_blank" style="color:var(--text);font-size:12px;text-decoration:none">' + p.title + '</a></td><td><span style="font-size:11px;color:var(--accent)">r/' + p.sub + '</span></td><td style="color:var(--green);font-size:12px">' + fmt(p.score) + '</td><td style="color:var(--text3);font-size:12px">' + fmt(p.comments) + '</td></tr>';
+  }).join('') || '<tr><td colspan="5" style="color:var(--text3)">Sin resultados</td></tr>';
 
-  // ── AI Strategy ──
+  // AI
   document.getElementById('ai-kw').textContent = kw;
-  document.getElementById('ai-seo').textContent = ai?.seo_score_potential ?? '—';
-  document.getElementById('ai-mon').textContent = ai?.monetization_potential ?? '—';
-  document.getElementById('ai-sea').textContent = ai?.seasonality ?? '—';
-  document.getElementById('ai-trend').textContent = ai?.trend_direction ?? '—';
-  document.getElementById('ai-content').textContent = ai?.best_content_type || 'Configura Groq API Key';
-  document.getElementById('ai-angle').textContent = ai?.editorial_angle || '—';
-  document.getElementById('ai-gap').textContent = ai?.content_gap || '—';
-  document.getElementById('ai-weak').textContent = ai?.competitor_weaknesses || '—';
-  document.getElementById('ai-time').textContent = ai?.best_posting_time || '—';
-  document.getElementById('ai-qs').innerHTML = (ai?.questions_to_answer || []).map(q =>
-    `<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2)">❓ ${q}</div>`).join('');
+  document.getElementById('ai-seo').textContent = ai.seo_score_potential || '—';
+  document.getElementById('ai-mon').textContent = ai.monetization_potential || '—';
+  document.getElementById('ai-sea').textContent = ai.seasonality || '—';
+  document.getElementById('ai-trd').textContent = ai.trend_direction || '—';
+  document.getElementById('ai-ct').textContent = ai.best_content_type || '—';
+  document.getElementById('ai-ang').textContent = ai.editorial_angle || '—';
+  document.getElementById('ai-gap').textContent = ai.content_gap || '—';
+  document.getElementById('ai-weak').textContent = ai.competitor_weaknesses || '—';
+  document.getElementById('ai-time').textContent = ai.best_posting_time || '—';
 }
 
-// ── COMPARE ───────────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════
+// COMPARE
+// ════════════════════════════════════════════════════
 async function runCompare() {
-  const a = document.getElementById('cmp-a').value.trim();
-  const b = document.getElementById('cmp-b').value.trim();
-  if (!a || !b) return;
-  document.getElementById('compare-out').innerHTML = '<div class="loading-wrap" style="padding:40px"><div class="spinner"></div><span>Comparando...</span></div>';
+  var a = document.getElementById('cmp-a').value.trim();
+  var b = document.getElementById('cmp-b').value.trim();
+  if(!a||!b) return;
+  document.getElementById('cmp-out').innerHTML = '<div class="loading" style="padding:30px"><div class="spin"></div><span>Comparando...</span></div>';
 
-  const sys = `Devuelve SOLO JSON sin markdown:
-{"a":{"kw":"","volume":int,"difficulty":int,"cpc":float,"intent":"","pros":["","",""],"cons":["",""]},"b":{"kw":"","volume":int,"difficulty":int,"cpc":float,"intent":"","pros":["","",""],"cons":["",""]},"winner":"nombre de la keyword ganadora","reason":"1 oración"}`;
-
+  var sys = 'Devuelve SOLO JSON sin markdown: {"a":{"kw":"","volume":0,"difficulty":0,"cpc":0.0,"intent":"","pros":["","",""],"cons":["",""]},"b":{"kw":"","volume":0,"difficulty":0,"cpc":0.0,"intent":"","pros":["","",""],"cons":["",""]},"winner":"","reason":""}';
+  var country = document.getElementById('country-sel').value;
+  var txt = await callGroq(sys, 'Compara para ' + country + ': A="' + a + '" vs B="' + b + '"');
+  if(!txt) { document.getElementById('cmp-out').innerHTML = '<div class="card" style="color:var(--red)">Error: configura Groq API Key.</div>'; return; }
   try {
-    const country = document.getElementById('country-sel').value;
-    const text = await callGroq(sys, `Compara para ${country}: A="${a}" vs B="${b}"`);
-    const d = JSON.parse(text.replace(/```json|```/g,'').trim());
-
-    const col = (side, color) => `
-      <div class="card" style="border-top:3px solid ${color}">
-        <div style="font-size:15px;font-weight:700;margin-bottom:12px;color:${color}">${side.kw} ${d.winner===side.kw?'<span class="badge badge-green">✓ Ganadora</span>':''}</div>
-        <div class="metrics-grid" style="grid-template-columns:1fr 1fr;margin-bottom:10px">
-          <div class="metric-card blue"><div class="metric-label">Volumen</div><div class="metric-value">${fmt(side.volume)}</div></div>
-          <div class="metric-card green"><div class="metric-label">Dificultad</div><div class="metric-value">${side.difficulty}%</div></div>
-        </div>
-        <div style="font-size:12px;color:var(--text3);margin-bottom:8px">CPC: $${Number(side.cpc||0).toFixed(2)} | ${side.intent}</div>
-        <div>${side.pros?.map(p=>`<div style="font-size:12px;color:var(--green);padding:2px 0">+ ${p}</div>`).join('')}</div>
-        <div style="margin-top:6px">${side.cons?.map(c=>`<div style="font-size:12px;color:var(--red);padding:2px 0">- ${c}</div>`).join('')}</div>
-      </div>`;
-
-    document.getElementById('compare-out').innerHTML = `
-      <div class="two-col">${col(d.a,'#4f6ef7')}${col(d.b,'#a855f7')}</div>
-      <div class="card"><strong>Conclusión:</strong> ${d.reason}</div>`;
+    var d = JSON.parse(txt.replace(/```json|```/g,'').trim());
+    var col = function(side, color) {
+      return '<div class="card" style="border-top:3px solid ' + color + '">' +
+        '<div style="font-size:14px;font-weight:700;margin-bottom:10px;color:' + color + '">' + side.kw + (d.winner===side.kw ? ' <span class="badge bg">✓ Ganadora</span>' : '') + '</div>' +
+        '<div class="mg" style="grid-template-columns:1fr 1fr;margin-bottom:8px">' +
+        '<div class="mc bl"><div class="ml">Volumen</div><div class="mv">' + fmt(side.volume) + '</div></div>' +
+        '<div class="mc gr"><div class="ml">Dificultad</div><div class="mv">' + side.difficulty + '%</div></div></div>' +
+        '<div style="font-size:12px;color:var(--text3);margin-bottom:6px">CPC: $' + Number(side.cpc||0).toFixed(2) + ' | ' + side.intent + '</div>' +
+        (side.pros||[]).map(function(p){ return '<div style="font-size:12px;color:var(--green);padding:2px 0">+ ' + p + '</div>'; }).join('') +
+        (side.cons||[]).map(function(c){ return '<div style="font-size:12px;color:var(--red);padding:2px 0">- ' + c + '</div>'; }).join('') +
+        '</div>';
+    };
+    document.getElementById('cmp-out').innerHTML = '<div class="two">' + col(d.a,'#4f6ef7') + col(d.b,'#a855f7') + '</div><div class="card"><strong>Conclusión:</strong> ' + d.reason + '</div>';
   } catch(e) {
-    document.getElementById('compare-out').innerHTML = `<div class="card" style="color:var(--red)">Error: ${e.message}</div>`;
+    document.getElementById('cmp-out').innerHTML = '<div class="card" style="color:var(--red)">Error al parsear respuesta.</div>';
   }
 }
 
-// ── BULK ──────────────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════
+// BULK
+// ════════════════════════════════════════════════════
 async function runBulk() {
-  const lines = document.getElementById('bulk-input').value.split('\n').map(l=>l.trim()).filter(Boolean).slice(0,10);
-  if (!lines.length) return;
-  document.getElementById('bulk-out').innerHTML = '<div class="loading-wrap" style="padding:40px"><div class="spinner"></div><span>Analizando ' + lines.length + ' keywords...</span></div>';
+  var lines = document.getElementById('bulk-ta').value.split('\n').map(function(l){ return l.trim(); }).filter(Boolean).slice(0,10);
+  if(!lines.length) return;
+  document.getElementById('bulk-out').innerHTML = '<div class="loading" style="padding:30px"><div class="spin"></div><span>Analizando ' + lines.length + ' keywords...</span></div>';
 
-  const country = document.getElementById('country-sel').value;
-  const sys = `Devuelve SOLO JSON array sin markdown. Para cada keyword del array devuelve: [{"kw":"","volume":int,"difficulty":int,"cpc":float,"intent":"","monetization":"","summary":"1 oración"}]`;
-
+  var sys = 'Devuelve SOLO JSON array sin markdown. Para cada keyword: [{"kw":"","volume":0,"difficulty":0,"cpc":0.0,"intent":"","monetization":"","summary":""}]';
+  var country = document.getElementById('country-sel').value;
+  var txt = await callGroq(sys, 'País: ' + country + '. Keywords: ' + JSON.stringify(lines));
+  if(!txt) { document.getElementById('bulk-out').innerHTML = '<div class="card" style="color:var(--red)">Error: configura Groq API Key.</div>'; return; }
   try {
-    const text = await callGroq(sys, `País: ${country}. Keywords: ${JSON.stringify(lines)}`);
-    const results = JSON.parse(text.replace(/```json|```/g,'').trim());
-
-    const rows = results.map((r,i) => `<tr>
-      <td style="font-weight:600">${r.kw}</td>
-      <td>${fmt(r.volume)}</td>
-      <td>${diffBadge(r.difficulty)}</td>
-      <td>$${Number(r.cpc||0).toFixed(2)}</td>
-      <td><span class="badge badge-blue">${r.intent}</span></td>
-      <td>${r.monetization}</td>
-      <td style="font-size:11px;color:var(--text3);max-width:200px">${r.summary}</td>
-      <td><button class="btn-sm" onclick="setKw('${r.kw.replace(/'/g,"\\'")}');startAnalysis()">Ver →</button></td>
-    </tr>`).join('');
-
-    document.getElementById('bulk-out').innerHTML = `
-      <div class="card">
-        <table>
-          <thead><tr><th>Keyword</th><th>Volumen</th><th>Dificultad</th><th>CPC</th><th>Intención</th><th>Monetización</th><th>Resumen</th><th></th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>`;
+    var results = JSON.parse(txt.replace(/```json|```/g,'').trim());
+    var rows = results.map(function(r){
+      return '<tr><td style="font-weight:600">' + r.kw + '</td><td>' + fmt(r.volume) + '</td><td>' + diffBadge(r.difficulty) + '</td><td>$' + Number(r.cpc||0).toFixed(2) + '</td><td><span class="badge bb">' + r.intent + '</span></td><td>' + (r.monetization||'—') + '</td><td style="font-size:11px;color:var(--text3);max-width:180px">' + (r.summary||'') + '</td></tr>';
+    }).join('');
+    document.getElementById('bulk-out').innerHTML = '<div class="card"><table><thead><tr><th>Keyword</th><th>Volumen</th><th>Dificultad</th><th>CPC</th><th>Intención</th><th>Monetización</th><th>Resumen</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
   } catch(e) {
-    document.getElementById('bulk-out').innerHTML = `<div class="card" style="color:var(--red)">Error: ${e.message}</div>`;
+    document.getElementById('bulk-out').innerHTML = '<div class="card" style="color:var(--red)">Error al parsear.</div>';
   }
 }
-
-// ── Keyword tabs ──────────────────────────────────────────────────────────────
-function kwTab(name, el) {
-  document.querySelectorAll('#sec-keywords .tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  ['longtail','lsi','questions'].forEach(n => {
-    document.getElementById('kw-' + n).style.display = n === name ? 'block' : 'none';
-  });
-}
-
-// ── Keyboard ──────────────────────────────────────────────────────────────────
-document.getElementById('kw-input').addEventListener('keydown', e => { if (e.key === 'Enter') startAnalysis(); });
 </script>
 </body>
 </html>
